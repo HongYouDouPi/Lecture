@@ -1,0 +1,41 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/about/about",
+    "pages/activity/activity",
+    "pages/publish/publish",
+    "pages/edit/edit",
+    "pages/lectureDetail/lectureDetail"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#FFFFFF",
+    "selectedColor": "#000000",
+    "list": [
+      {
+        "text": "首页",
+        "pagePath": "pages/index/index",
+        "iconPath": "/static/image/icon/首页.png",
+        "selectedIconPath": "/static/image/icon/首页-选中.png"
+      },
+      {
+        "text": "我",
+        "pagePath": "pages/about/about",
+        "iconPath": "/static/image/icon/我的.png",
+        "selectedIconPath": "/static/image/icon/我的-选中.png"
+      },
+      {
+        "text": "活动",
+        "pagePath": "pages/activity/activity",
+        "iconPath": "/static/image/icon/电影票.png",
+        "selectedIconPath": "/static/image/icon/电影票-选中.png"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

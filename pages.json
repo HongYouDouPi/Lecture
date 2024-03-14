@@ -29,7 +29,7 @@
 		
 		// 其他页面
 		{
-			"path" : "pages/publish/publish",
+			"path" : "pages/index/deputy_index/publish/publish",
 			"style" : 
 			{
 				"navigationBarTitleText" : "发布",
@@ -45,21 +45,30 @@
 			}
 		},
 		{
-			"path" : "pages/test/test",
+			"path" : "pages/lectureDetail/lectureDetail",
 			"style" : 
 			{
-				"navigationBarTitleText" : "测试页面",
+				"navigationBarTitleText" : "详情",
 				"enablePullDownRefresh" : false
 			}
 		},
 		{
-			"path" : "pages/lectureDetail/lectureDetail",
+			"path" : "pages/index/deputy_index/locationClockin/locationClockin",
 			"style" : 
 			{
-				"navigationBarTitleText" : "",
+				"navigationBarTitleText" : "打卡",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/index/deputy_index/moreExciting/moreExciting",
+			"style" : 
+			{
+				"navigationBarTitleText" : "更多精彩",
 				"enablePullDownRefresh" : false
 			}
 		}
+		
 		
 	],
 	

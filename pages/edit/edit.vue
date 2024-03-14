@@ -11,18 +11,24 @@
 				</view>
 			</view>
 		</view>
+		
+		<view class="">
+			<picker mode="selector" :range="genderSelcet" @change="typeSelectChange">
+				<view>看看</view>
+				
+			</picker>
+			
+		</view>
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				name:'红油豆皮',
-				myImgUrl:'https://www.freeimg.cn/i/2024/02/07/65c2f64ebb38d.png',
-			};
-		}
-	}
+<script setup>
+	import { ref,reactive} from 'vue';
+	
+	const genderSelcet = ref(['男','女']);
+	const name = '红油豆皮';
+	const myImgUrl = 'https://www.freeimg.cn/i/2024/02/07/65c2f64ebb38d.png';
+	 
 </script>
 
 <style lang="scss">

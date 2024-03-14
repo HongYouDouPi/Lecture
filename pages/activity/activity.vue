@@ -4,9 +4,9 @@
 		<view class="find">
 			<!-- 搜索框 -->
 			<view class="text">
-				<image :src="search_img" mode="aspectFit" class="find_pic"></image>
+				<image :src="iconImage.search_img" mode="aspectFit" class="find_pic"></image>
 				<!-- 输入框 /还要加以一个事件绑定-输入内容传到后端--> 
-				<input placeholder ="搜你想搜，做我享做！"></input>
+				<input type="text" placeholder ="搜你想搜，做我享做！">
 			</view>
 			<!-- 搜索控件 -->
 			<view class="search">
@@ -23,7 +23,7 @@
 					<text>已结束</text>
 				</view>
 				<view class="filter_button">
-					<image :src="shift_img" mode="aspectFit" class="filter_img"></image>
+					<image :src="iconImage.shift_img" mode="aspectFit" class="filter_img"></image>
 					<text>筛选</text>
 				</view>
 			</view>
@@ -48,18 +48,18 @@
 							<view class="time_location">
 								<!-- 时间 -->
 								<view class="time">
-									<image :src="time_img" mode="aspectFit" class="text_img"></image>
+									<image :src="iconImage.time_img" mode="aspectFit" class="text_img"></image>
 									<text>{{lecture.time}}</text>
 								</view>
 								<!-- 地点 -->
 								<view class="location_visitor">
 									<view class="location">
-										<image :src="location_img" mode="aspectFit" class="text_img"></image>
+										<image :src="iconImage.location_img" mode="aspectFit" class="text_img"></image>
 										<text>{{lecture.location}}</text>								
 									</view>
 									<!-- 浏览数 -->
 									<view class="visitor">
-										<image :src="visit_img" mode="" class="visitor_img"></image>
+										<image :src="iconImage.visit_img" mode="" class="visitor_img"></image>
 										<text>{{lecture.visitor}}</text>
 									</view>
 								</view>
@@ -91,102 +91,79 @@
 
 
 
-<script>
-	export default {
-		// data里面只能有return的返回值，是用来记录有哪些数据可以被上面调用的 类似于js
-		data() {
+<script setup>
+	import {ref , reactive} from "vue";
+	// 屏幕宽高
+	const WindowHeight = ref(0);
+	const WindowWidth = ref(0);
+		//滚动栏高度 动态变化
+	const scroll_height = ref(0);
+	
+		//显示回到顶部
+	const showToTop = ref(false);
+	
+	//一些图标
+	const iconImage = reactive({
+		search_img:'https://www.freeimg.cn/i/2024/02/07/65c2f021a2f3f.png',
+		shift_img:'https://www.freeimg.cn/i/2024/02/07/65c2f021a1f61.png',
+		visit_img:'https://www.freeimg.cn/i/2024/02/07/65c2f021a265e.png',
+		time_img:'https://www.freeimg.cn/i/2024/02/07/65c2f021a28a5.png',
+		location_img:'https://www.freeimg.cn/i/2024/02/07/65c2f021a2b30.png',
+	});
+	
+	// 讲座信息
+		// 用数组存放中括号表示包含所有数据 大括号表示一个对像
+	const lecture = ref(
+		[
+			{id:1,name:'宣讲会',time:'2024/2/10',brief:"快来看看准研究生们都具备哪些品质吧！(不超过25个字)",pic:'https://www.freeimg.cn/i/2024/01/31/65b9dea2d7399.jpg',location:'理科南',visitor:'82',way:'线上'},
 			
-			return {
-				// 屏幕宽高
-				WindowHeight:0,
-				WindowWidth:0,
-					//滚动栏高度 动态变化
-				scroll_height:0,
-				
-					//显示回到顶部
-				showToTop:false,
-								
-				//一些图标
-				search_img:'https://www.freeimg.cn/i/2024/02/07/65c2f021a2f3f.png',
-				shift_img:'https://www.freeimg.cn/i/2024/02/07/65c2f021a1f61.png',
-				visit_img:'https://www.freeimg.cn/i/2024/02/07/65c2f021a265e.png',
-				time_img:'https://www.freeimg.cn/i/2024/02/07/65c2f021a28a5.png',
-				location_img:'https://www.freeimg.cn/i/2024/02/07/65c2f021a2b30.png',
-				// 讲座信息
-					// 用数组存放中括号表示包含所有数据 大括号表示一个对像
-				lecture:[
-					{id:1,name:'宣讲会',time:'2024/2/10',brief:"快来看看准研究生们都具备哪些品质吧！(不超过25个字)",pic:'https://www.freeimg.cn/i/2024/01/31/65b9dea2d7399.jpg',location:'理科南',visitor:'82',way:'线上'},
-					
-					{id:2,name:'茶话会',time:'2024/2/11',brief:"有你up的茶品嘛？",pic:'https://www.freeimg.cn/i/2024/01/31/65b9de9f76e3b.jpg',location:'风雨走廊',visitor:'12',way:'线下'},
-					
-					{id:3,name:'品牌会',time:'2024/2/12',brief:"这些品牌居然是黑榜！",pic:'https://www.freeimg.cn/i/2024/01/31/65b9de9e09908.jpg',location:'北区篮球场',visitor:'10222',way:'线下'},
-					
-					{id:4,name:'研讨会',time:'2024/2/13',brief:"俗话说:俗话说的好！",pic:'https://www.freeimg.cn/i/2024/01/31/65b9de9bc4c2d.jpg',location:'理科北',visitor:'112',way:'线上'},
-					{id:5,name:'茶话会',time:'2024/2/11',brief:"有你up的茶品嘛？",pic:'https://www.freeimg.cn/i/2024/01/31/65b9de9d992d7.jpg',location:'文俊楼',visitor:'122',way:'线下'},
-					
-					{id:6,name:'品牌会',time:'2024/2/12',brief:"这些品牌居然是黑榜！",pic:'https://www.freeimg.cn/i/2024/01/31/65b9de9c64d6f.jpg',location:'田径场',visitor:'123',way:'线下'}
-				]
-			};
-		},
-						
-		computed:{
+			{id:2,name:'茶话会',time:'2024/2/11',brief:"有你up的茶品嘛？",pic:'https://www.freeimg.cn/i/2024/01/31/65b9de9f76e3b.jpg',location:'风雨走廊',visitor:'12',way:'线下'},
 			
-			// 计算scroll高度
-			calculate_scrollHeight(){
-				return {
-					height:(this.WindowHeight-110)*2+'rpx',
-				};
-			},
-		},
-		
-		//一些方法
-		methods:{
-			// 回到顶部
-			slideToTop(){
+			{id:3,name:'品牌会',time:'2024/2/12',brief:"这些品牌居然是黑榜！",pic:'https://www.freeimg.cn/i/2024/01/31/65b9de9e09908.jpg',location:'北区篮球场',visitor:'10222',way:'线下'},
+			
+			{id:4,name:'研讨会',time:'2024/2/13',brief:"俗话说:俗话说的好！",pic:'https://www.freeimg.cn/i/2024/01/31/65b9de9bc4c2d.jpg',location:'理科北',visitor:'112',way:'线上'},
+			{id:5,name:'茶话会',time:'2024/2/11',brief:"有你up的茶品嘛？",pic:'https://www.freeimg.cn/i/2024/01/31/65b9de9d992d7.jpg',location:'文俊楼',visitor:'122',way:'线下'},
+			
+			{id:6,name:'品牌会',time:'2024/2/12',brief:"这些品牌居然是黑榜！",pic:'https://www.freeimg.cn/i/2024/01/31/65b9de9c64d6f.jpg',location:'田径场',visitor:'123',way:'线下'}
+		]
+	)
+	
+	// 回到顶部
+	function slideToTop(){
 				uni.pageScrollTo({
 					scrollTop:0,
 					duration:260,
 				})
-			},
-			
-			//获取页面滑动位置 当 是否显示回到顶部的图标
-			onPageScroll(e){
-				//当滑动高度大于100时返回ture给showToTop
-				this.showToTop=e.scrollTop>100;
-				
-				// console.log(this.showToTop)
-			},
-			
-			// 跳转到讲座详情
-			navigateToDetail(){
-				uni.navigateTo({
-					url:'/pages/lectureDetail/lectureDetail',
-				})
-			}
-		},
+			};
+	//获取页面滑动位置 当 是否显示回到顶部的图标
+	function onPageScroll(e){
+		//当滑动高度大于100时返回ture给showToTop
+		this.showToTop=e.scrollTop>100;
 		
-		// onload生命周期函数只会被调用一次
-		onLoad(){		
+		// console.log(this.showToTop)
+	};
+	
+	// 跳转到讲座详情
+	function navigateToDetail(){
+		uni.navigateTo({
+			url:'/pages/lectureDetail/lectureDetail',
+		})
+	};
+	
 			
-			// 获得屏幕高度 宽度
-			uni.getSystemInfo({
-				success:(res)=>{
-					this.WindowHeight=res.windowHeight;
-					this.WindowWidth=res.windowWidth;
-					console.log('页面高度'+this.WindowHeight,'页面宽度'+this.WindowWidth);
-				}
-			});			
-		},
+		// // onload生命周期函数只会被调用一次
+		// onLoad(){					
+		// 	// 获得屏幕高度 宽度
+		// 	uni.getSystemInfo({
+		// 		success:(res)=>{
+		// 			this.WindowHeight=res.windowHeight;
+		// 			this.WindowWidth=res.windowWidth;
+		// 			console.log('页面高度'+this.WindowHeight,'页面宽度'+this.WindowWidth);
+		// 		}
+		// 	});			
+		// },
 		
-		//onready 生命周期函数 当页面已经渲染的差不多的时候 也就是图片 网页都快加载好了 这个函数就出现(可获取加载完的窗口等) 且只进行一次
-		onReady() {
-			// uni.onPageScroll(this.onPageScroll);
-		},
-		
-		onUnload() {
-			// uni.offPageScroll(this.onPageScroll);
-		}
-	}
+	
 </script>
 
 
