@@ -23,6 +23,9 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.whole {
+  background-color: #ececec;
+}
 .whole swiper {
   height: 400rpx;
   width: 100%;
@@ -35,17 +38,203 @@
   height: 400rpx;
   width: 100%;
 }
-.scroll {
-  width: 100%;
+.whole .function {
   height: 300rpx;
-  border: 1rpx solid;
+  margin: 0rpx 0rpx;
+  padding: 0rpx 25rpx;
+  border-bottom-right-radius: 20rpx;
+  border-bottom-left-radius: 20rpx;
+  background-color: #FFFFFF;
+  box-shadow: 0rpx 10rpx 18rpx -10rpx #8a8a8a;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  align-items: center;
 }
-.scroll_item {
-  width: 90%;
-  height: 250rpx;
-  background-color: grey;
+.whole .function .function_item {
+  width: 30%;
+  height: 70%;
+  border: 2rpx #cecece solid;
+  border-radius: 20rpx;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  /* 确保模糊区域不会溢出 */
+  z-index: 1;
+  /* 提高这些元素的堆叠顺序，确保它们在模糊区域之上 */
 }
-.scroll_item image {
-  width: 300rpx;
-  height: 150rpx;
+.whole .function .function_item image {
+  width: 60rpx;
+  height: 60rpx;
+  margin-top: 30rpx;
+  margin-bottom: 10rpx;
+}
+.whole .function .function_item .function_text {
+  font-size: 28rpx;
+  margin-top: 10rpx;
+  letter-spacing: 2rpx;
+  font-weight: bold;
+}
+.whole .function .function_item .note_text {
+  font-size: 20rpx;
+  margin-bottom: 20rpx;
+}
+.whole .function .function_item .vague {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  width: 65%;
+  height: 66%;
+  filter: blur(18px);
+  /* 模糊效果，你可以调整这个值来改变模糊程度 */
+  z-index: -1;
+  /* 提高这些元素的堆叠顺序，确保它们在模糊区域之上 */
+}
+.whole .function .function_item .vague_1 {
+  background-color: rgba(255, 130, 249, 0.5);
+  /* 半透明背景 */
+}
+.whole .function .function_item .vague_2 {
+  background-color: rgba(255, 244, 87, 0.5);
+  /* 半透明背景 */
+}
+.whole .function .function_item .vague_3 {
+  background-color: rgba(222, 162, 92, 0.6);
+  /* 半透明背景 */
+}
+.whole .function .function_1_item .function_text {
+  color: #560081;
+}
+.whole .function .function_1_item .note_text {
+  color: #560081;
+}
+.whole .function .function_2_item .function_text {
+  color: #dda46b;
+}
+.whole .function .function_2_item .note_text {
+  color: #dda46b;
+}
+.whole .function .function_3_item .function_text {
+  color: #000000;
+}
+.whole .function .function_3_item .note_text {
+  color: #000000;
+}
+.whole .scroll_recommand {
+  height: 400rpx;
+  margin: 30rpx 30rpx;
+  background-color: #FFFFFF;
+  border-radius: 25rpx;
+}
+.whole .scroll_recommand .recommand_text {
+  height: 60rpx;
+  padding: 20rpx 20rpx 0rpx 20rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.whole .scroll_recommand .recommand_text text {
+  font-size: 36rpx;
+  font-weight: 600;
+}
+.whole .scroll_recommand .recommand_text .more_recommand text {
+  font-size: 32rpx;
+  font-weight: normal;
+}
+.whole .scroll_recommand .recommand_text .more_recommand image {
+  height: 25rpx;
+  width: 25rpx;
+}
+.whole .scroll_recommand .scroll {
+  width: 100%;
+  height: 320rpx;
+  white-space: nowrap;
+}
+.whole .scroll_recommand .scroll .scroll_item {
+  width: 46%;
+  height: 100%;
+  display: inline-block;
+}
+.whole .scroll_recommand .scroll .scroll_item .item_composition {
+  height: 280rpx;
+  padding: 20rpx 0rpx 20rpx 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+.whole .scroll_recommand .scroll .scroll_item .item_composition image {
+  width: 100%;
+  height: 170rpx;
+  border-radius: 25rpx;
+}
+.whole .scroll_new_hot {
+  height: 450rpx;
+  margin: 30rpx 30rpx;
+  background-color: #FFFFFF;
+  border-radius: 25rpx;
+}
+.whole .scroll_new_hot .newhot_text {
+  height: 60rpx;
+  padding: 20rpx 20rpx 0rpx 20rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.whole .scroll_new_hot .newhot_text text {
+  font-size: 36rpx;
+  font-weight: 600;
+}
+.whole .scroll_new_hot .newhot_text .more_new text {
+  font-size: 32rpx;
+  font-weight: normal;
+}
+.whole .scroll_new_hot .newhot_text .more_new image {
+  height: 25rpx;
+  width: 25rpx;
+}
+.whole .scroll_new_hot .scroll_type {
+  height: 100rpx;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.whole .scroll_new_hot .scroll_type .typeitem {
+  height: 50rpx;
+  margin: 0rpx 20rpx;
+  padding: 0rpx 10rpx;
+  background-color: #ececec;
+  align-items: center;
+}
+.whole .scroll_new_hot .scroll_type .selectitem {
+  background-color: #ffe2e2;
+  color: #ff7878;
+}
+.whole .scroll_new_hot .scroll {
+  width: 100%;
+  height: 320rpx;
+  white-space: nowrap;
+}
+.whole .scroll_new_hot .scroll .scroll_item {
+  width: 46%;
+  height: 100%;
+  display: inline-block;
+}
+.whole .scroll_new_hot .scroll .scroll_item .item_composition {
+  height: 230rpx;
+  padding: 20rpx 0rpx 20rpx 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+.whole .scroll_new_hot .scroll .scroll_item .item_composition image {
+  width: 100%;
+  height: 170rpx;
+  border-radius: 25rpx;
 }

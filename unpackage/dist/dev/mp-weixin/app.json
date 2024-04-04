@@ -3,9 +3,14 @@
     "pages/index/index",
     "pages/about/about",
     "pages/activity/activity",
-    "pages/publish/publish",
+    "pages/index/deputy_index/publish/publish",
     "pages/edit/edit",
-    "pages/lectureDetail/lectureDetail"
+    "pages/lectureDetail/lectureDetail",
+    "pages/index/deputy_index/locationClockin/locationClockin",
+    "pages/index/deputy_index/moreExciting/moreExciting",
+    "pages/index/deputy_index/obtainLocation/obtainLocation",
+    "pages/test/test",
+    "pages/index/deputy_index/test/test"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -37,5 +42,19 @@
       }
     ]
   },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "查询位置实现打卡"
+    }
+  },
+  "requiredPrivateInfos": [
+    "chooseAddress",
+    "chooseLocation",
+    "choosePoi",
+    "getLocation",
+    "onLocationChange",
+    "startLocationUpdateBackground",
+    "startLocationUpdate"
+  ],
   "usingComponents": {}
 }

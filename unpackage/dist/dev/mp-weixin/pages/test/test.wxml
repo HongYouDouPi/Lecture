@@ -1,1 +1,1 @@
-<view class="container"><custom-navbar u-i="3d71f0de-0" bind:__l="__l"></custom-navbar><view class="page-content"><text>这是首页内容</text></view></view>
+<view class="data-v-727d09f0"><button class="data-v-727d09f0" bindtap="{{a}}">选择图片</button><button wx:if="{{b}}" class="data-v-727d09f0" bindtap="{{c}}">预览图片</button><button wx:if="{{d}}" class="data-v-727d09f0" bindtap="{{e}}">上传图片</button></view>

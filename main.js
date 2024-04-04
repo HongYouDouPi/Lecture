@@ -8,6 +8,12 @@ App.mpType = 'app'
 const app = new Vue({
   ...App
 })
+// 地图挂载
+var amapFile = require('@/libs/amap-wx.130.js');
+Vue.prototype.myAmapFun = new amapFile.AMapWX({
+	key: 'c0ef501fdeb710a906f74359b8c97a40'
+});
+
 app.$mount()
 // #endif
 
@@ -19,4 +25,5 @@ export function createApp() {
     app
   }
 }
+
 // #endif

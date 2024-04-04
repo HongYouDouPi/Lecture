@@ -67,6 +67,30 @@
 				"navigationBarTitleText" : "更多精彩",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+			"path" : "pages/index/deputy_index/obtainLocation/obtainLocation",
+			"style" : 
+			{
+				"navigationBarTitleText" : "地图选点",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/test/test",
+			"style" : 
+			{
+				"navigationBarTitleText" : "测试页面",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/index/deputy_index/test/test",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
 		}
 		
 		

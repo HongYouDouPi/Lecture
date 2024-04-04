@@ -5,9 +5,14 @@ if (!Math) {
   "./pages/index/index.js";
   "./pages/about/about.js";
   "./pages/activity/activity.js";
-  "./pages/publish/publish.js";
+  "./pages/index/deputy_index/publish/publish.js";
   "./pages/edit/edit.js";
   "./pages/lectureDetail/lectureDetail.js";
+  "./pages/index/deputy_index/locationClockin/locationClockin.js";
+  "./pages/index/deputy_index/moreExciting/moreExciting.js";
+  "./pages/index/deputy_index/obtainLocation/obtainLocation.js";
+  "./pages/test/test.js";
+  "./pages/index/deputy_index/test/test.js";
 }
 const _sfc_main = {
   onLaunch: function() {

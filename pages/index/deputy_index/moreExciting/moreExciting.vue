@@ -1,3 +1,4 @@
+
 <template>
 	<view>
 		
@@ -14,6 +15,6 @@
 	}
 </script>
 
-<style lang="less">
+<style lang="scss">
 
 </style>

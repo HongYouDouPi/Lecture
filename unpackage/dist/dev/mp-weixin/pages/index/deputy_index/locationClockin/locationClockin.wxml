@@ -1,0 +1,1 @@
+<view class="map-page"><map id="map" class="map" latitude="{{a}}" longitude="{{b}}" markers="{{c}}" bindregionchange="{{d}}"></map></view>

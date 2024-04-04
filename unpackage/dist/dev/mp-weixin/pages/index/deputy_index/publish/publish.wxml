@@ -1,0 +1,1 @@
+<view><view class="selectLocation"><text bindtap="{{a}}">地图选点</text></view></view>

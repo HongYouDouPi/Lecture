@@ -50,11 +50,25 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "",
+        "appid" : "wxaa86e9381eda37c9",
         "setting" : {
             "urlCheck" : false
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "查询位置实现打卡"
+            }
+        },
+		"requiredPrivateInfos" : [
+		            "chooseAddress",
+		            "chooseLocation",
+		            "choosePoi",
+		            "getLocation",
+		            "onLocationChange",
+		            "startLocationUpdateBackground",
+		            "startLocationUpdate"
+		        ]
     },
     "mp-alipay" : {
         "usingComponents" : true
