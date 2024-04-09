@@ -74,32 +74,18 @@ const _sfc_main = {
             height: 15,
             adress: info.address
           };
+          console.log("来自腾讯地图Api", info);
           covers.value = [location];
         }
       });
     }
-    function calculateLocation() {
-      const startLocation = { latitude: start.value.latitude, longitude: start.value.longitude };
-      const destLocation = [{ latitude: dest.value.latitude, longitude: dest.value.longitude }];
-      qqmapsdk.calculateDistance({
-        // 直线距离
-        mode: "straight",
-        from: startLocation || "",
-        to: destLocation,
-        success(response) {
-          const elements = response.result.elements;
-          if (Array.isArray(elements)) {
-            elements.forEach((element, index) => {
-              const Distance = element.distance;
-              console.log(`两地距离为：${Distance}米`);
-            });
-          } else {
-            console.error("elements 数组为空或未定义");
-          }
-        },
-        fail(error) {
-          console.error(error);
-        }
+    function submitLocation() {
+      const location = dest.value;
+      common_vendor.index.$emit("locationSelected", location);
+      console.log("发送数据", location);
+      common_vendor.index.navigateBack({
+        delta: 1
+        // 返回上一页的层数，这里假设上一页就在当前页面的前一层
       });
     }
     function throttle(func, delay) {
@@ -113,7 +99,7 @@ const _sfc_main = {
         return func(...args);
       };
     }
-    const throttledSetCovers = throttle(setCovers, 200);
+    const throttledSetCovers = throttle(setCovers, 300);
     common_vendor.onMounted(() => {
       getCurrentLocation();
     });
@@ -123,11 +109,9 @@ const _sfc_main = {
         b: longitude.value,
         c: covers.value,
         d: common_vendor.o(handleRegionChange),
-        e: start.value.address,
-        f: common_vendor.o(($event) => start.value.address = $event.detail.value),
-        g: dest.value.address,
-        h: common_vendor.o(($event) => dest.value.address = $event.detail.value),
-        i: common_vendor.o(calculateLocation)
+        e: dest.value.address,
+        f: common_vendor.o(($event) => dest.value.address = $event.detail.value),
+        g: common_vendor.o(submitLocation)
       };
     };
   }

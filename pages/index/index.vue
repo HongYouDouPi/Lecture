@@ -23,7 +23,7 @@
 			<!-- 上栏 -->
 			<view class="recommand_text">
 				<text>{{reconmmandText}}</text>
-				<view class="more_recommand">
+				<view class="more_recommand" @click="navigaToActivity">
 					<text>更多</text>
 					<image src="/static/image/icon/右箭头.png" mode="aspectFit"></image>
 				</view>
@@ -31,7 +31,7 @@
 			<!-- 下栏 -->
 			<scroll-view  class="scroll" scroll-x ="ture" >		
 				<view class="scroll_item" v-for="(item) in scroll_recommend" :key="item.id">
-					<view class="item_composition">
+					<view class="item_composition" @click="navigateToDetail(item)">
 						<image :src="item.pic" mode="aspectFit"></image>
 						<text>{{item.name}}{{item.id}}</text>
 						<text style="color: #919191;">{{item.time}}</text>
@@ -43,7 +43,7 @@
 		<!-- 最新讲座 -->
 		<view class="scroll_recommand">
 				<!-- 上栏 -->
-				<view class="recommand_text">
+				<view class="recommand_text" @click="navigaToActivity"> 
 					<text>{{newText}}</text>
 					<view class="more_recommand">
 						<text>更多</text>
@@ -53,7 +53,7 @@
 				<!-- 下栏 -->
 			<scroll-view  class="scroll" scroll-x ="ture" show-scrollbar="false">		
 				<view class="scroll_item" v-for="(item) in scroll_recommend" :key="item.id">
-						<view class="item_composition">
+						<view class="item_composition" @click="navigateToDetail(item)">
 							<image :src="item.pic" mode="aspectFit"></image>
 							<text>{{item.name}}{{item.id}}</text>
 							<text style="color: #919191;">{{item.time}}</text>
@@ -68,7 +68,7 @@
 					<!-- 上栏 -->
 					<view class="newhot_text">
 						<text>{{hotText}}</text>
-						<view class="more_new">
+						<view class="more_new" @click="navigaToActivity">
 							<text>更多</text>
 							<image src="/static/image/icon/右箭头.png" mode="aspectFit"></image>
 						</view>
@@ -83,7 +83,7 @@
 					<!-- 下栏 -->
 				<scroll-view  class="scroll" scroll-x ="ture" show-scrollbar="false">		
 					<view class="scroll_item" v-for="(item) in filterhot" :key="item.id">
-							<view class="item_composition">
+							<view class="item_composition" @click="navigateToDetail(item)">
 								<image :src="item.pic" mode="aspectFit"></image>
 								<text>{{item.name}}{{item.id}}</text>
 								<!-- <text style="color: #919191;">{{item.time}}</text> -->
@@ -102,9 +102,9 @@
 	import {computed, reactive, ref} from "vue";
 	
 	
-	const reconmmandText = "推荐讲座";
-	const newText = "最新讲座";
-	const hotText = "热门讲座";
+	const reconmmandText = ref("推荐讲座");
+	const newText = ref("最新讲座");
+	const hotText = ref("热门讲座");
 	
 	// 类别选择器中的内容
 	const typeSelect = ref([ '美育','三创','经典百书','其他']);
@@ -152,7 +152,9 @@
 				pic:'/static/image/icon/敬请期待.png',
 				name:"更多精彩",
 				note_text: "敬请期待",
-				url: 'deputy_index/moreExciting/moreExciting'
+				url: '/pages/test/test',
+				// 真实的在下面
+				// url: 'deputy_index/moreExciting/moreExciting'
 			}
 		]
 	)
@@ -211,6 +213,19 @@
 			url:link
 		})
 	}
+	// 跳转到活动
+	function navigaToActivity() {
+	    uni.switchTab({
+	        url: '/pages/activity/activity'
+	    });
+	}
+	// 跳转到讲座详情页面
+	function navigateToDetail(item){
+		uni.navigateTo({
+			url: '/pages/lectureDetail/lectureDetail?itemId=' + item.id
+		});
+	}
+	
 	
 	// 加分类型选择器筛选更新数据-热门
 	function typeSelectChangeHot(index){

@@ -1,1 +1,1 @@
-<view class="map-page"><map id="map" class="map" latitude="{{a}}" longitude="{{b}}" markers="{{c}}" bindregionchange="{{d}}"></map></view>
+<map class="map" latitude="{{a}}" longitude="{{b}}" markers="{{c}}" bindregionchange="{{d}}"></map><form catchsubmit="{{i}}"><input type="text" placeholder="起点" value="{{e}}" bindinput="{{f}}"/><input type="text" placeholder="终点" value="{{g}}" bindinput="{{h}}"/><button form-type="submit">测量</button></form>

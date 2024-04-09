@@ -5,10 +5,10 @@
 	  :markers="covers" 
 	  @regionchange="handleRegionChange"></map>  
   
-    <form @submit.prevent="calculateLocation">  
-       <input type="text" v-model="start.address" placeholder="起点" />  
+    <form @submit.prevent="submitLocation">  
+       <!-- <input type="text" v-model="start.address" placeholder="起点" />  -->
        <input type="text" v-model="dest.address" placeholder="终点" />  
-       <button form-type="submit">测量</button>  
+       <button form-type="submit">确定设置</button>  
     </form> 
 </template>  
   
@@ -154,6 +154,19 @@ function calculateLocation(){
 		}
 	})
 	
+}
+
+// 返回目的地址给上一页
+function submitLocation(){
+	const location = dest.value;
+	// 发送事件，并传递数据
+	uni.$emit('locationSelected', location);
+	console.log("发送数据",location);
+
+	// 返回上一页
+	uni.navigateBack({
+		delta: 1 // 返回上一页的层数，这里假设上一页就在当前页面的前一层
+	});
 }
 
 

@@ -6776,6 +6776,7 @@ exports.index = index;
 exports.n = n;
 exports.o = o;
 exports.onMounted = onMounted;
+exports.onUnmounted = onUnmounted;
 exports.reactive = reactive;
 exports.ref = ref;
 exports.t = t;

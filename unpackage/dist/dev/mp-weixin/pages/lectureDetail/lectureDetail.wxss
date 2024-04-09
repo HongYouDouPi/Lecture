@@ -112,9 +112,37 @@
   letter-spacing: 1rpx;
   box-shadow: 0rpx 6rpx 2rpx -2rpx #ffaa00;
 }
+.whole .content .LectureDetails.data-v-19ce0033 {
+  /* 公告部分的样式 */
+  /* 讲座简介部分的样式 */
+}
 .whole .content .LectureDetails image.data-v-19ce0033 {
   height: 30rpx;
   width: 30rpx;
+}
+.whole .content .LectureDetails .announcement-section.data-v-19ce0033 {
+  padding: 10px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+.whole .content .LectureDetails .announcement-section .title.data-v-19ce0033 {
+  font-weight: bold;
+}
+.whole .content .LectureDetails .announcement-section .content.data-v-19ce0033 {
+  color: #333;
+}
+.whole .content .LectureDetails .lecture-introduction.data-v-19ce0033 {
+  padding: 10px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+.whole .content .LectureDetails .lecture-introduction .title.data-v-19ce0033 {
+  font-weight: bold;
+}
+.whole .content .LectureDetails .lecture-introduction .content.data-v-19ce0033 {
+  color: #333;
 }
 .contact image.data-v-19ce0033 {
   height: 30rpx;

@@ -1,6 +1,8 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		
 		// tabbar栏目三个页面
+		
 		{
 			"path" : "pages/index/index",
 			"style" : 
@@ -27,7 +29,18 @@
 		},
 		
 		
+		// 测试页面
+		{
+			"path" : "pages/index/deputy_index/test/test",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		},
+		
 		// 其他页面
+
 		{
 			"path" : "pages/index/deputy_index/publish/publish",
 			"style" : 
@@ -83,15 +96,8 @@
 				"navigationBarTitleText" : "测试页面",
 				"enablePullDownRefresh" : false
 			}
-		},
-		{
-			"path" : "pages/index/deputy_index/test/test",
-			"style" : 
-			{
-				"navigationBarTitleText" : "",
-				"enablePullDownRefresh" : false
-			}
 		}
+		
 		
 		
 	],

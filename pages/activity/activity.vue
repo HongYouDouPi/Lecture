@@ -30,7 +30,6 @@
 			
 			<!-- 每条活动 -->
 			<scroll-view scroll-y="true" @click="navigateToDetail">
-				<!-- :style="calculate_scrollHeight"加在scroll里面的 函数是计算滑动区域的高度 但是好像每个控件在每个机型上会出现不一样的高度 不好实现统一 -->
 				<view class="content_item" v-for="(lecture,index) in lecture" :key="index">
 					<!-- 图片 -->
 					<view class="item_pic">

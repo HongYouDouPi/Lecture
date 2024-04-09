@@ -3,6 +3,9 @@ const common_vendor = require("../../common/vendor.js");
 const _sfc_main = {
   __name: "index",
   setup(__props) {
+    const reconmmandText = common_vendor.ref("推荐讲座");
+    const newText = common_vendor.ref("最新讲座");
+    const hotText = common_vendor.ref("热门讲座");
     const typeSelect = common_vendor.ref(["美育", "三创", "经典百书", "其他"]);
     common_vendor.ref([]);
     const currentTypeIndex = common_vendor.ref(0);
@@ -124,7 +127,7 @@ const _sfc_main = {
             g: common_vendor.o(($event) => navigateTo(item.url), index)
           };
         }),
-        c: common_vendor.t(_ctx.reconmmandText),
+        c: common_vendor.t(reconmmandText.value),
         d: common_vendor.f(scroll_recommend, (item, k0, i0) => {
           return {
             a: item.pic,
@@ -134,7 +137,7 @@ const _sfc_main = {
             e: item.id
           };
         }),
-        e: common_vendor.t(_ctx.newText),
+        e: common_vendor.t(newText.value),
         f: common_vendor.f(scroll_recommend, (item, k0, i0) => {
           return {
             a: item.pic,
@@ -144,7 +147,7 @@ const _sfc_main = {
             e: item.id
           };
         }),
-        g: common_vendor.t(_ctx.hotText),
+        g: common_vendor.t(hotText.value),
         h: common_vendor.f(typeSelect.value, (item, index, i0) => {
           return {
             a: common_vendor.t(item),

@@ -31,7 +31,18 @@
 				<text @click="getView('list')" :class="{'textselected':showList}">参与名单</text>
 			</view>  
 			<!-- 详情容器 -->
-			<view v-if="showDetail" class="LectureDetails">  
+			<view v-if="showDetail" class="LectureDetails"> 
+				 <!-- 添加的公告部分 -->
+				 <view class="announcement-section">
+					 <view class="title">公告</view>
+					 <view class="content">这里添加讲座相关的公告信息。</view>
+				 </view>
+				 
+				 <!-- 添加的讲座简介部分 -->
+				 <view class="lecture-introduction">
+					 <view class="title">讲座简介</view>
+					 <view class="content">这里添加讲座的详细介绍。</view>
+				 </view>
 				<text>
 					<image src="../../static/image/icon/打招呼.png" mode="aspectFit"></image>
 					公告
@@ -213,6 +224,35 @@ import { reactive, ref } from 'vue';
 					width: 30rpx;
 					
 				}
+				
+				/* 公告部分的样式 */
+				.announcement-section {
+				    padding: 10px;
+				    background-color: #f2f2f2;
+				    border-radius: 5px;
+				    margin: 10px 0;
+				}
+				.announcement-section .title {
+				    font-weight: bold;
+				}
+				.announcement-section .content {
+				    color: #333;
+				}
+				
+				/* 讲座简介部分的样式 */
+				.lecture-introduction {
+				    padding: 10px;
+				    background-color: #f2f2f2;
+				    border-radius: 5px;
+				    margin-bottom: 10px;
+				}
+				.lecture-introduction .title {
+				    font-weight: bold;
+				}
+				.lecture-introduction .content {
+				    color: #333;
+				}
+
 			}
 		}
 	}
