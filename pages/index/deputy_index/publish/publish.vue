@@ -14,12 +14,18 @@
         <view class="picker">时间：{{ lectureTime }}</view>
       </picker>
     </view>
-    <view class="input-wrapper">
+	<!-- 上传文件 -->
+    <!-- <view class="input-wrapper">
       <input type="file" @change="handleFileChange" accept="image/*" class="input-field">
-    </view>
+    </view> -->
+	<!-- 上传图片 -->
+	 <view class="input-wrapper">
+	    <button @click="UploadImage" class="submit-button">选择图片并上传</button>
+	  </view>
+	  
     <view class="input-wrapper">
-      <view class="input-title">讲座详情：
-		<textarea v-model="lectureDetail" placeholder="请输入讲座详情" class="large-input-field"></textarea>
+      <view class="input-title">讲座简介：
+		<textarea v-model="lectureIntroduction" placeholder="请输入讲座详情" class="large-input-field"></textarea>
 	  </view>
     </view>
     <view class="input-wrapper">
@@ -47,7 +53,7 @@
   const lectureName = ref('');
   const lectureDate = ref('');
   const lectureTime = ref('');
-  const lectureDetail = ref('');
+  const lectureIntroduction = ref('');
   const lectureAnnouncement = ref('');
   const location = ref('');
   
@@ -65,51 +71,81 @@
     lectureImage = event.target.files[0];
   }
   
+	function UploadImage(){
+		uni.chooseImage({
+		    success: chooseImageRes => {
+		        const tempFilePaths = chooseImageRes.tempFilePaths;
+		        uni.uploadFile({
+		            url: 'http://127.0.0.1:8080/upload', // 接口URL
+		            filePath: tempFilePaths[0],
+		            name: 'file', // 对应请求参数中的file
+		            // formData: {
+		            //     // 这里可以添加其他参数，如permission, strategy_id等
+		            // },
+		            // header: {
+		            //     'Authorization': '315|Si0Y3HfufBwbEG50XT02eMTS5ZK5kENEUcZ8iJaM', // 需要服务器端支持
+		            //     'Content-Type': 'multipart/form-data'
+		            // },
+		            success: uploadFileRes => {
+		                console.log("好像成功了？",uploadFileRes.data);
+		                // 根据业务处理返回数据
+		            }
+		        });
+		    }
+		});
+
+	}
 	
 
   // 表单提交
 async function submitForm() {
 	const data = {
-	        lectureName: lectureName.value,
-	        lectureDate: lectureDate.value,
-	        lectureTime: lectureTime.value,
-	        lectureDetail: lectureDetail.value,
-	        lectureAnnouncement: lectureAnnouncement.value,
-	        lectureLocation: location.value
+	        lecture_name: lectureName.value,
+	        // lectureDate: lectureDate.value,
+	        // lectureTime: lectureTime.value,
+			lecture_time : lectureDate.value + ' ' + lectureTime.value,
+	        lecture_introduction: lectureIntroduction.value,
+	        lecture_announcement: lectureAnnouncement.value,
+			lecture_image_url:"https://www.freeimg.cn/i/2024/02/07/65c2f64ebba77.png",
+	        location: location.value.address,
+			latitude:location.value.latitude,
+			longitude:location.value.longitude,
 	    };	  
   
     try {
 		const response = await uni.request({
-		            url: '/lectures',
-		            method: 'POST',
-		            data: data
-		        });
-		        console.log(response.data);
+			//后端接口
+			url: 'http://127.0.0.1:8080/lecturesInfoSend',
+			method: 'POST',
+			data: data
+		});
+		console.log(response.data);
     } catch (error) {
       console.error('上传错误：Error submitting form:', error);
     }
 }
   
-// 地图逻辑
+// 跳转到地图逻辑
 function navigateToMap(){
     uni.navigateTo({
       url:'/pages/index/deputy_index/obtainLocation/obtainLocation'
     })
 }
   
+  
 onMounted(() => {
 	  // 监听事件
 	  uni.$on('locationSelected', (e) => {
 			// 接收到数据后的处理
 			location.value = e;
-			console.log("拿到数据" , location)
+			console.log("拿到数据" , location.value)
 	  });
 });
-
 // 在组件销毁时解绑事件监听
  onUnmounted(() => {
   uni.$off('locationSelected');
 });
+
 </script>
 
 <style lang="scss">
@@ -182,6 +218,4 @@ onMounted(() => {
     padding: 10rpx; /* 调整内边距 */
     margin-top: 20rpx; /* 添加顶部间距 */
   }
-
-  
 </style>

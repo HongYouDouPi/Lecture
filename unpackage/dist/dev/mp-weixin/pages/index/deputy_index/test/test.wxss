@@ -1,24 +1,2 @@
-
-.container {
-  display: flex;
-  flex-direction: column;
-  padding: 20rpx;
-}
-.input-field {
-  margin-bottom: 20rpx;
-  height: 80rpx;
-  font-size: 28rpx;
-  line-height: 80rpx;
-  border: 1px solid #ccc;
-  border-radius: 10rpx;
-  padding: 0 20rpx;
-}
-.submit-button {
-  height: 80rpx;
-  line-height: 80rpx;
-  background-color: #1aad19;
-  color: white;
-  font-size: 32rpx;
-  border: none;
-  border-radius: 10rpx;
-}
+  
+/* 在这里添加你的样式 */  

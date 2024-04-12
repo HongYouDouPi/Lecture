@@ -152,6 +152,7 @@
 				pic:'/static/image/icon/敬请期待.png',
 				name:"更多精彩",
 				note_text: "敬请期待",
+				// 测试页面
 				url: '/pages/test/test',
 				// 真实的在下面
 				// url: 'deputy_index/moreExciting/moreExciting'

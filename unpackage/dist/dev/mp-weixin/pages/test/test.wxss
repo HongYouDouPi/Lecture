@@ -1,2 +1,26 @@
-  
-/* 在这里添加你的样式 */  
+
+.ShowSomething{
+		text-align: center;
+		margin-top: 20px;
+		font-size: 16px;
+		color: #666;
+}
+.content{
+		padding: 20px;
+}
+.content_item{
+		background-color: #f5f5f5;
+		border-radius: 8px;
+		margin-bottom: 20px;
+		padding: 16px;
+}
+.lecture-name{
+		font-size: 18px;
+		font-weight: bold;
+		color: #333;
+		margin-bottom: 8px;
+}
+.lecture-time, .lecture-location{
+		font-size: 14px;
+		color: #999;
+}

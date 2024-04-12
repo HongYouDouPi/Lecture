@@ -1,1 +1,1 @@
-<view class="data-v-727d09f0"><button class="data-v-727d09f0" bindtap="{{a}}">选择图片</button><button wx:if="{{b}}" class="data-v-727d09f0" bindtap="{{c}}">预览图片</button><button wx:if="{{d}}" class="data-v-727d09f0" bindtap="{{e}}">上传图片</button></view>
+<view class="ShowSomething"><text>从mysql获得静态的讲座信息</text></view><view class="content"><view wx:for="{{a}}" wx:for-item="lecture" wx:key="d" class="content_item"><text class="lecture-name">{{lecture.a}}</text><text class="lecture-time">{{lecture.b}}</text><text class="lecture-location">{{lecture.c}}</text></view></view>

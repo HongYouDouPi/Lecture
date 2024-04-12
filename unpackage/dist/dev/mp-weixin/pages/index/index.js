@@ -47,7 +47,10 @@ const _sfc_main = {
           pic: "/static/image/icon/敬请期待.png",
           name: "更多精彩",
           note_text: "敬请期待",
-          url: "deputy_index/moreExciting/moreExciting"
+          // 测试页面
+          url: "/pages/test/test"
+          // 真实的在下面
+          // url: 'deputy_index/moreExciting/moreExciting'
         }
       ]
     );
@@ -102,6 +105,16 @@ const _sfc_main = {
         url: link
       });
     }
+    function navigaToActivity() {
+      common_vendor.index.switchTab({
+        url: "/pages/activity/activity"
+      });
+    }
+    function navigateToDetail(item) {
+      common_vendor.index.navigateTo({
+        url: "/pages/lectureDetail/lectureDetail?itemId=" + item.id
+      });
+    }
     function typeSelectChangeHot(index) {
       currentTypeIndex.value = index;
     }
@@ -128,39 +141,45 @@ const _sfc_main = {
           };
         }),
         c: common_vendor.t(reconmmandText.value),
-        d: common_vendor.f(scroll_recommend, (item, k0, i0) => {
+        d: common_vendor.o(navigaToActivity),
+        e: common_vendor.f(scroll_recommend, (item, k0, i0) => {
           return {
             a: item.pic,
             b: common_vendor.t(item.name),
             c: common_vendor.t(item.id),
             d: common_vendor.t(item.time),
-            e: item.id
+            e: common_vendor.o(($event) => navigateToDetail(item), item.id),
+            f: item.id
           };
         }),
-        e: common_vendor.t(newText.value),
-        f: common_vendor.f(scroll_recommend, (item, k0, i0) => {
+        f: common_vendor.t(newText.value),
+        g: common_vendor.o(navigaToActivity),
+        h: common_vendor.f(scroll_recommend, (item, k0, i0) => {
           return {
             a: item.pic,
             b: common_vendor.t(item.name),
             c: common_vendor.t(item.id),
             d: common_vendor.t(item.time),
-            e: item.id
+            e: common_vendor.o(($event) => navigateToDetail(item), item.id),
+            f: item.id
           };
         }),
-        g: common_vendor.t(hotText.value),
-        h: common_vendor.f(typeSelect.value, (item, index, i0) => {
+        i: common_vendor.t(hotText.value),
+        j: common_vendor.o(navigaToActivity),
+        k: common_vendor.f(typeSelect.value, (item, index, i0) => {
           return {
             a: common_vendor.t(item),
             b: currentTypeIndex.value === index ? 1 : "",
             c: common_vendor.o(($event) => typeSelectChangeHot(index))
           };
         }),
-        i: common_vendor.f(filterhot.value, (item, k0, i0) => {
+        l: common_vendor.f(filterhot.value, (item, k0, i0) => {
           return {
             a: item.pic,
             b: common_vendor.t(item.name),
             c: common_vendor.t(item.id),
-            d: item.id
+            d: common_vendor.o(($event) => navigateToDetail(item), item.id),
+            e: item.id
           };
         })
       };
