@@ -13,6 +13,7 @@ if (!Math) {
   "./pages/index/deputy_index/moreExciting/moreExciting.js";
   "./pages/index/deputy_index/obtainLocation/obtainLocation.js";
   "./pages/test/test.js";
+  "./pages/mypublish/mypublish.js";
 }
 const _sfc_main = {
   onLaunch: function() {

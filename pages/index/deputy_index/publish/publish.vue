@@ -2,6 +2,17 @@
   <view>
     <!-- 整合后的发布条目输入字段 -->
     <view class="input-wrapper">
+		<!-- 上传图片 -->
+		 <!-- <view class="input-wrapper">
+		    <button @click="UploadImage" class="submit-button">选择图片并上传</button>
+		  </view> -->
+		  <!-- 上传图片 -->
+		      <view v-if="lectureImage">
+		        <image :src="lectureImage" class="uploaded-image" mode="aspectFill"></image>
+		      </view>
+		      <view v-else class="input-wrapper">
+		        <button @click="UploadImage" class="submit-button">选择图片并上传</button>
+		      </view>
       <input type="text" v-model="lectureName" placeholder="讲座名称" class="input-field">
     </view>
     <view class="input-wrapper">
@@ -13,16 +24,7 @@
       <picker mode="time" :value="lectureTime" @change="timeChanged" class="input-field">
         <view class="picker">时间：{{ lectureTime }}</view>
       </picker>
-    </view>
-	<!-- 上传文件 -->
-    <!-- <view class="input-wrapper">
-      <input type="file" @change="handleFileChange" accept="image/*" class="input-field">
-    </view> -->
-	<!-- 上传图片 -->
-	 <view class="input-wrapper">
-	    <button @click="UploadImage" class="submit-button">选择图片并上传</button>
-	  </view>
-	  
+    </view> 
     <view class="input-wrapper">
       <view class="input-title">讲座简介：
 		<textarea v-model="lectureIntroduction" placeholder="请输入讲座详情" class="large-input-field"></textarea>
@@ -56,8 +58,8 @@
   const lectureIntroduction = ref('');
   const lectureAnnouncement = ref('');
   const location = ref('');
-  
-  let lectureImage = null;
+  const lectureImage = ref('');
+  const DellectureImage = ref('');
 
   function dateChanged(event) {
     lectureDate.value = event.detail.value;
@@ -67,46 +69,71 @@
     lectureTime.value = event.detail.value;
   }
   
-  function handleFileChange(event) {
-    lectureImage = event.target.files[0];
-  }
-  
-	function UploadImage(){
-		uni.chooseImage({
-		    success: chooseImageRes => {
-		        const tempFilePaths = chooseImageRes.tempFilePaths;
-		        uni.uploadFile({
-		            url: 'http://127.0.0.1:8080/upload', // 接口URL
-		            filePath: tempFilePaths[0],
-		            name: 'file', // 对应请求参数中的file
-		            // formData: {
-		            //     // 这里可以添加其他参数，如permission, strategy_id等
-		            // },
-		            // header: {
-		            //     'Authorization': '315|Si0Y3HfufBwbEG50XT02eMTS5ZK5kENEUcZ8iJaM', // 需要服务器端支持
-		            //     'Content-Type': 'multipart/form-data'
-		            // },
-		            success: uploadFileRes => {
-		                console.log("好像成功了？",uploadFileRes.data);
-		                // 根据业务处理返回数据
-		            }
-		        });
-		    }
-		});
-
+  // 选择图片并上传
+	function UploadImage() {
+	  uni.chooseImage({
+	    success: chooseImageRes => {
+	      const tempFilePaths = chooseImageRes.tempFilePaths;
+	      uni.uploadFile({
+	        url: 'http://127.0.0.1:8080/upload', // 您的服务器端点
+	        filePath: tempFilePaths[0],
+	        name: 'file',
+	        success: uploadFileRes => {
+				const data = JSON.parse(uploadFileRes.data);
+				console.log("上传结果", data);
+				
+				// if (data && data.links) {
+					
+				// 	// console.log("访问地址1",data.links.url);
+				// 	console.log("访问地址2",data.links);
+				//   // lectureImage.value = data.links.url;
+				//   console.log("访问地址", lectureImage.value);
+				// } else {
+				//   console.error("上传成功，但无法获取图片链接");
+				// }
+				if (data.status) {
+					// 如果上传成功，则保存图片URL到lectureImage变量
+					lectureImage.value = data.data.links.url; // 获取图片URL并赋值
+					DellectureImage.value = data.data.links.delete_url
+					console.log("图片URL:", lectureImage.value); // 输出图片URL，以便调试
+				} else {
+					// 这里处理上传失败的情况
+					uni.showModal({
+						title: '上传失败',
+						content: data.message,
+						showCancel: false
+					});
+				}
+	        },
+	        fail: uploadFileErr => {
+	          // 这里处理网络错误或其他错误的情况
+	          console.error("上传失败", uploadFileErr);
+	          uni.showModal({
+	            title: '上传失败',
+	            content: '无法连接到服务器',
+	            showCancel: false
+	          });
+	        }
+	      });
+	    }
+	  });
 	}
-	
 
-  // 表单提交
+  // 表单提交- 提交到数据库
 async function submitForm() {
 	const data = {
 	        lecture_name: lectureName.value,
 	        // lectureDate: lectureDate.value,
 	        // lectureTime: lectureTime.value,
 			lecture_time : lectureDate.value + ' ' + lectureTime.value,
+			// 多文字
 	        lecture_introduction: lectureIntroduction.value,
 	        lecture_announcement: lectureAnnouncement.value,
-			lecture_image_url:"https://www.freeimg.cn/i/2024/02/07/65c2f64ebba77.png",
+			// 图像
+			lecture_image_url: lectureImage.value,
+			lecture_image_delurl : DellectureImage.value,
+			// 地理位置
+			longitude : location.value.delete_url,
 	        location: location.value.address,
 			latitude:location.value.latitude,
 			longitude:location.value.longitude,
@@ -218,4 +245,11 @@ onMounted(() => {
     padding: 10rpx; /* 调整内边距 */
     margin-top: 20rpx; /* 添加顶部间距 */
   }
+  .uploaded-image {
+      width: 100%; /* 设置图片宽度 */
+      height: 400rpx; /* 设置图片高度 */
+      // object-fit: cover; /* 图片等比例缩放并填充容器 *
+      border-radius: 10rpx; /* 设置圆角 */
+      margin-bottom: 20rpx; /* 设置下方间距 */
+    }
 </style>

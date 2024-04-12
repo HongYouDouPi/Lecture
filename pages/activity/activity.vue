@@ -6,7 +6,7 @@
 			<view class="text">
 				<image :src="iconImage.search_img" mode="aspectFit" class="find_pic"></image>
 				<!-- 输入框 /还要加以一个事件绑定-输入内容传到后端--> 
-				<input type="text" placeholder ="搜你想搜，做我享做！">
+				<input type="text" placeholder="搜你想搜，做我享做！">
 			</view>
 			<!-- 搜索控件 -->
 			<view class="search">
@@ -30,36 +30,36 @@
 			
 			<!-- 每条活动 -->
 			<scroll-view scroll-y="true" @click="navigateToDetail">
-				<view class="content_item" v-for="(lecture,index) in lecture" :key="index">
+				<view class="content_item" v-for="(lecture, index) in lectures" :key="index">
 					<!-- 图片 -->
 					<view class="item_pic">
-						<image :src="lecture.pic" mode="aspectFill" class="item_image"></image>
+						<image :src="lecture.lecture_image_url" mode="aspectFill" class="item_image"></image>
 					</view>
 					<!-- 具体内容 -->
 					<view class="content_text">
 						<!-- 文字栏 -->
 						<view class="basic">
 							<!-- 讲座名 -->
-							<text class="text_name">{{lecture.name}}</text>
+							<text class="text_name">{{ lecture.lecture_name }}</text>
 							<!-- 讲座简介 -->
-							<text class="text_brief">{{lecture.brief}}</text>
+							<text class="text_brief">{{ lecture.lecture_introduction }}</text>
 							<!-- 具体时间地点 -->
 							<view class="time_location">
 								<!-- 时间 -->
 								<view class="time">
 									<image :src="iconImage.time_img" mode="aspectFit" class="text_img"></image>
-									<text>{{lecture.time}}</text>
+									<text>{{ formatDate(lecture.lecture_time)}}</text>
 								</view>
 								<!-- 地点 -->
 								<view class="location_visitor">
 									<view class="location">
 										<image :src="iconImage.location_img" mode="aspectFit" class="text_img"></image>
-										<text>{{lecture.location}}</text>								
+										<text>{{ lecture.location }}</text>								
 									</view>
 									<!-- 浏览数 -->
 									<view class="visitor">
 										<image :src="iconImage.visit_img" mode="" class="visitor_img"></image>
-										<text>{{lecture.visitor}}</text>
+										<text>{{ lecture.visitor }}</text>
 									</view>
 								</view>
 							</view>
@@ -90,8 +90,9 @@
 
 
 
+
 <script setup>
-	import {ref , reactive} from "vue";
+	import {ref , reactive,onMounted} from "vue";
 	// 屏幕宽高
 	const WindowHeight = ref(0);
 	const WindowWidth = ref(0);
@@ -112,21 +113,14 @@
 	
 	// 讲座信息
 		// 用数组存放中括号表示包含所有数据 大括号表示一个对像
-	const lecture = ref(
-		[
-			{id:1,name:'宣讲会',time:'2024/2/10',brief:"快来看看准研究生们都具备哪些品质吧！(不超过25个字)",pic:'https://www.freeimg.cn/i/2024/01/31/65b9dea2d7399.jpg',location:'理科南',visitor:'82',way:'线上'},
-			
-			{id:2,name:'茶话会',time:'2024/2/11',brief:"有你up的茶品嘛？",pic:'https://www.freeimg.cn/i/2024/01/31/65b9de9f76e3b.jpg',location:'风雨走廊',visitor:'12',way:'线下'},
-			
-			{id:3,name:'品牌会',time:'2024/2/12',brief:"这些品牌居然是黑榜！",pic:'https://www.freeimg.cn/i/2024/01/31/65b9de9e09908.jpg',location:'北区篮球场',visitor:'10222',way:'线下'},
-			
-			{id:4,name:'研讨会',time:'2024/2/13',brief:"俗话说:俗话说的好！",pic:'https://www.freeimg.cn/i/2024/01/31/65b9de9bc4c2d.jpg',location:'理科北',visitor:'112',way:'线上'},
-			{id:5,name:'茶话会',time:'2024/2/11',brief:"有你up的茶品嘛？",pic:'https://www.freeimg.cn/i/2024/01/31/65b9de9d992d7.jpg',location:'文俊楼',visitor:'122',way:'线下'},
-			
-			{id:6,name:'品牌会',time:'2024/2/12',brief:"这些品牌居然是黑榜！",pic:'https://www.freeimg.cn/i/2024/01/31/65b9de9c64d6f.jpg',location:'田径场',visitor:'123',way:'线下'}
-		]
-	)
+	const lectures = ref([])
 	
+	// 定义格式化日期的函数
+	function formatDate(dateString) {
+	    const date = new Date(dateString);
+	    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+	    return date.toLocaleDateString('zh-CN', options);
+	}
 	// 回到顶部
 	function slideToTop(){
 				uni.pageScrollTo({
@@ -150,18 +144,19 @@
 	};
 	
 			
-		// // onload生命周期函数只会被调用一次
-		// onLoad(){					
-		// 	// 获得屏幕高度 宽度
-		// 	uni.getSystemInfo({
-		// 		success:(res)=>{
-		// 			this.WindowHeight=res.windowHeight;
-		// 			this.WindowWidth=res.windowWidth;
-		// 			console.log('页面高度'+this.WindowHeight,'页面宽度'+this.WindowWidth);
-		// 		}
-		// 	});			
-		// },
-		
+	onMounted(() => {
+		uni.request({
+			url: 'http://127.0.0.1:8000/lectures',
+			method: 'GET',
+			success(res) {
+				lectures.value = res.data;
+				console.log(lectures.value);
+			},
+			fail(err) {
+				console.error('Failed to fetch lectures:', err);
+			}
+		});
+	});
 	
 </script>
 
@@ -343,6 +338,12 @@
 							.location{
 								display: flex;
 								align-items: center;
+								
+								text{
+									width: 220rpx;
+									overflow: hidden; /* 超出部分隐藏 */
+									white-space: nowrap; /* 防止文本换行，强制在一行内显示 */
+								}
 							}
 							.visitor{
 								height: 38rpx;

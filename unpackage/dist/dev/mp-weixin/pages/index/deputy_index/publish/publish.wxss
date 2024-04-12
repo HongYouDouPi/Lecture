@@ -95,3 +95,13 @@
   margin-top: 20rpx;
   /* 添加顶部间距 */
 }
+.uploaded-image {
+  width: 100%;
+  /* 设置图片宽度 */
+  height: 400rpx;
+  /* 设置图片高度 */
+  border-radius: 10rpx;
+  /* 设置圆角 */
+  margin-bottom: 20rpx;
+  /* 设置下方间距 */
+}

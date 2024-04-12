@@ -1,7 +1,7 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
 const _sfc_main = {
-  __name: "test",
+  __name: "mypublish",
   setup(__props) {
     const lectures = common_vendor.ref([]);
     const formatDate = (dateString) => {
@@ -37,5 +37,5 @@ const _sfc_main = {
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/Aser/Graduation_project/Lecture/pages/test/test.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/Aser/Graduation_project/Lecture/pages/mypublish/mypublish.vue"]]);
 wx.createPage(MiniProgramPage);

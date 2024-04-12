@@ -1,34 +1,39 @@
 <template>
 	<view class="ShowSomething">
-		<text>从mysql获得静态的讲座信息</text>
+		<text>讲座信息</text>
 	</view>
     <view class="content">
         <!-- 显示讲座信息 -->
         <view class="content_item" v-for="(lecture, index) in lectures" :key="index">
-            <text class="lecture-name">{{ lecture.name }}</text>
-            <text class="lecture-time">{{ lecture.time }}</text>
+            <!-- 讲座图片 -->
+            <image :src="lecture.lecture_image_url" mode="aspectFill" class="lecture-image"></image>
+            <text class="lecture-name">{{ lecture.lecture_name }}</text>
+            <!-- 格式化日期显示 -->
+            <text class="lecture-time">{{ formatDate(lecture.lecture_time) }}</text>
             <text class="lecture-location">{{ lecture.location }}</text>
-            <!-- 其他讲座信息... -->
+            <text class="lecture-introduction">{{ lecture.lecture_introduction }}</text>
+            <text class="lecture-announcement">{{ lecture.lecture_announcement }}</text>
+            <!-- 删除图片链接，根据需要决定是否展示 -->
         </view>
     </view>
 </template>
 
 <script setup>
     import { ref, onMounted } from 'vue';
-    // 导入 uni.request 方法用于发送 HTTP 请求
-    // import uni from 'uni';
 
-    // 定义存放讲座信息的数组
     const lectures = ref([]);
 
-    // 在组件挂载后发送请求获取讲座信息
+    // 日期格式化函数
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+        return new Date(dateString).toLocaleDateString('zh-CN', options);
+    };
+
     onMounted(() => {
-        // 发送 HTTP GET 请求获取讲座信息
         uni.request({
-            url: 'http://127.0.0.1:8080/lectures', // 替换为你的后端接口地址
+            url: 'http://127.0.0.1:8000/lectures',
             method: 'GET',
             success(res) {
-                // 将获取到的讲座信息数组赋值给 lectures 变量
                 lectures.value = res.data;
             },
             fail(err) {
@@ -39,32 +44,36 @@
 </script>
 
 <style>
-	.ShowSomething{
-		text-align: center;
-		margin-top: 20px;
-		font-size: 16px;
-		color: #666;
-	}
-	.content{
-		padding: 20px;
-	}
+    /* 其他样式保持不变 */
 
-	.content_item{
-		background-color: #f5f5f5;
-		border-radius: 8px;
-		margin-bottom: 20px;
-		padding: 16px;
-	}
+    .content_item{
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin-bottom: 20px;
+        padding: 16px;
+        overflow: hidden; /* 防止内容溢出 */
+    }
 
-	.lecture-name{
-		font-size: 18px;
-		font-weight: bold;
-		color: #333;
-		margin-bottom: 8px;
-	}
+    .lecture-image {
+        width: 100%;
+        height: 200px; /* 设定一个固定高度或者使用aspectFill模式 */
+        object-fit: cover; /* 覆盖整个容器 */
+        border-top-left-radius: 8px; /* 圆角 */
+        border-top-right-radius: 8px;
+        margin-bottom: 12px;
+    }
 
-	.lecture-time, .lecture-location{
-		font-size: 14px;
-		color: #999;
-	}
+    .lecture-introduction, .lecture-announcement {
+        color: #333;
+        font-size: 14px;
+        margin-top: 4px; /* 调整间距 */
+    }
+
+    .lecture-announcement {
+        margin-top: 8px; /* 调整公告与介绍的间距 */
+        color: #e53e3e; /* 用颜色区分公告 */
+    }
 </style>
+
+

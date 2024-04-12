@@ -10,7 +10,8 @@
     "pages/index/deputy_index/locationClockin/locationClockin",
     "pages/index/deputy_index/moreExciting/moreExciting",
     "pages/index/deputy_index/obtainLocation/obtainLocation",
-    "pages/test/test"
+    "pages/test/test",
+    "pages/mypublish/mypublish"
   ],
   "window": {
     "navigationBarTextStyle": "black",

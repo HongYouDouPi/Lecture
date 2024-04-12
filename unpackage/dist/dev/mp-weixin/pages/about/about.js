@@ -1,50 +1,43 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
 const _sfc_main = {
-  data() {
-    return {
-      // 背景图和用户名从后端获取
-      myName: "豆皮",
-      myImgUrl: "https://www.freeimg.cn/i/2024/02/07/65c2f64ebb38d.png",
-      list: [
-        { name: "全部参加", pic: "https://www.freeimg.cn/i/2024/02/15/65cd870a725bc.png" },
-        { name: "已完成", pic: "https://www.freeimg.cn/i/2024/02/15/65cd860bcb186.png" },
-        { name: "待参加", pic: "https://www.freeimg.cn/i/2024/02/15/65cd860be609d.png" }
-      ]
-      // list_width:670 + 'rpx',
-    };
-  },
-  // 生命周期函数？
-  onLoad() {
-    this.get_myImgUrl();
-  },
-  // 这里面写功能函数嘛？
-  methods: {
-    // 获取头像
-    get_myImgUrl() {
-      const Url = "https://www.freeimg.cn/i/2024/02/07/65c2f64ebb38d.png";
-      this.myImgUrl = Url;
-    },
-    // 编辑个人信息跳转
-    navigateToedit() {
+  __name: "about",
+  setup(__props) {
+    const myName = common_vendor.ref("豆皮");
+    const myImgUrl = common_vendor.ref("https://www.freeimg.cn/i/2024/02/07/65c2f64ebb38d.png");
+    const list = common_vendor.ref([
+      { name: "全部参加", pic: "https://www.freeimg.cn/i/2024/02/15/65cd870a725bc.png", path: "/pages/alljoin/alljoin" },
+      { name: "已完成", pic: "https://www.freeimg.cn/i/2024/02/15/65cd860bcb186.png", path: "/pages/finished/finished" },
+      { name: "待参加", pic: "https://www.freeimg.cn/i/2024/02/15/65cd860be609d.png", path: "/pages/waitjoin/waitjoin" }
+    ]);
+    function navigateTo_mypublish() {
+      common_vendor.index.navigateTo({
+        url: "/pages/mypublish/mypublish"
+      });
+    }
+    function navigateTo_edit() {
       common_vendor.index.navigateTo({
         url: "/pages/edit/edit"
       });
     }
+    return (_ctx, _cache) => {
+      return {
+        a: myImgUrl.value,
+        b: common_vendor.f(list.value, (item, index, i0) => {
+          return {
+            a: item.pic,
+            b: common_vendor.t(item.name),
+            c: index,
+            d: common_vendor.o(($event) => _ctx.navigateTo(item.path), index)
+          };
+        }),
+        c: common_vendor.o(navigateTo_mypublish),
+        d: common_vendor.o(navigateTo_edit),
+        e: myImgUrl.value,
+        f: common_vendor.t(myName.value)
+      };
+    };
   }
 };
-function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return {
-    a: common_vendor.f($data.list, (list, index, i0) => {
-      return {
-        a: list.pic,
-        b: common_vendor.t(list.name)
-      };
-    }),
-    b: common_vendor.o(($event) => $options.navigateToedit()),
-    c: $data.myImgUrl,
-    d: common_vendor.t($data.myName)
-  };
-}
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/Aser/Graduation_project/Lecture/pages/about/about.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/Aser/Graduation_project/Lecture/pages/about/about.vue"]]);
 wx.createPage(MiniProgramPage);

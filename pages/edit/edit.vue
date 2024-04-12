@@ -3,7 +3,7 @@
         <view class="mine">
             <view class="my">
                 <view class="my_basic">
-                    <image :src="myImgUrl" mode=""></image>
+                    <image :src="myImgUrl" mode="aspectFit"></image>
                     <text>{{ name }}</text>
                 </view>
                 <view class="my_avtiveInformation">

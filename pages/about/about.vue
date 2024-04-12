@@ -1,122 +1,144 @@
 <template>
-	<view class="whole">
-		
-		 <!-- //我-头像和名字 -->
-		<view class="mine">
-			<image src="https://www.freeimg.cn/i/2024/02/07/65c2f888e769e.jpg" mode="aspectFill" class="my_background"></image>
-			<!-- //信息栏 -->
-			<view class="list">
+  <view class="whole">
+    <!-- 我-头像和名字 -->
+    <view class="mine">
+      <image :src="myImgUrl" mode="aspectFill" class="my_background"></image>
+      <!-- 信息栏 -->
+      <view class="list">
+        <!-- 参加/未完成 -->
+        <view class="attend">
+          <view class="attend_list" v-for="(item, index) in list" :key="index" @click="navigateTo(item.path)">
+            <image :src="item.pic" mode="aspectFit" class="attend_pic"></image>
+            <text>{{ item.name }}</text>
+          </view>
+        </view>
+        
+        <!-- 小功能 -->
+        <view class="function">
+          <!-- 收藏发布 -->
+          <view class="function_mine base_appearance">
+            <view class="favorites base_appearance_single">
+              <image src="https://www.freeimg.cn/i/2024/02/19/65d2c509c96f3.png" mode="aspectFit" class="favorites"></image>
+              <text>我的收藏</text>
+            </view>                      
+            <view class="base_appearance_single" @click="navigateTo_mypublish">
+              <image src="https://www.freeimg.cn/i/2024/02/19/65d2c509cbce9.png" mode="aspectFit"></image>
+              <text>我的发布</text>
+            </view>
+          </view>
+          
+          <!-- 编辑个人信息 -->
+          <view class="edit base_appearance" @click="navigateTo_edit">
+            <view class="base_appearance_single">
+              <image src="https://www.freeimg.cn/i/2024/02/19/65d2c509c395c.png" mode="aspectFit"></image>
+              <text>编辑个人信息</text>
+            </view>                      
+          </view> 
+          
+          <!-- 分享交流 -->
+          <view class="share base_appearance">
+            <view class="base_appearance_single">
+              <image src="https://www.freeimg.cn/i/2024/02/19/65d2c726be67d.png" mode="aspectFit"></image>
+              <text>联系反馈</text>
+            </view>
+            <view class="base_appearance_single">
+              <image src="https://www.freeimg.cn/i/2024/02/19/65d2c509cac2f.png" mode="aspectFit"></image>
+              <text>分享好友</text>
+            </view>                      
+          </view>
+          
+		  <!-- 登录/注册 -->
+		  <view class="sign_up" @click="showLoginModal = true" v-if="!isLoggedIn">
+		    <text>登录/注册</text>
+		  </view>
+		  <!-- 退出登录 -->
+		  <view class="sign_out" v-if="isLoggedIn">
+		    <text>退出登录</text>
+		  </view>
 				
-				<!-- //参加/未完成 -->
-				<view class="attend">
-					<view class="attend_list" v-for="(list,index) in list">
-						<image :src="list.pic" mode="aspectFit" class="attend_pic"></image>
-						<text>{{list.name}}</text>
-						
-					</view>
-					
-				</view>
-				
-				<!-- 小功能 -->
-				<view class="function">
-					
-					<!-- 收藏发布 -->
-					<view class="function_mine base_appearance">
-						<view class="favorites base_appearance_single">
-							<image src="https://www.freeimg.cn/i/2024/02/19/65d2c509c96f3.png" mode="aspectFit" class="favorites"></image>
-							<text>我的收藏</text>
-							
-						</view>						
-						<view class="base_appearance_single">
-							<image src="https://www.freeimg.cn/i/2024/02/19/65d2c509cbce9.png" mode="aspectFit"></image>
-							<text>我的发布</text>
-						</view>
-					</view>
-					
-					
-					<!-- 编辑个人信息 -->
-					<view class="edit base_appearance " @click="navigateToedit()">
-						<view class="base_appearance_single">
-							<image src="https://www.freeimg.cn/i/2024/02/19/65d2c509c395c.png" mode="aspectFit"></image>
-							<text>编辑个人信息</text>
-						</view>						
-					</view>	
-					
-					<!-- 分享交流 -->
-					<view class="share base_appearance">
-						<view class="base_appearance_single">
-							<image src="https://www.freeimg.cn/i/2024/02/19/65d2c726be67d.png" mode="aspectFit"></image>
-							<text>联系反馈</text>
-						</view>
-						<view class="base_appearance_single">
-							<image src="https://www.freeimg.cn/i/2024/02/19/65d2c509cac2f.png" mode="aspectFit"></image>
-							<text>分享好友</text>
-						</view>						
-					</view>
-					
-					<!-- 退出登录 -->
-					<view class="sign_out">
-						<!-- <image src="" mode=""></image> -->
-						<text>退出登录</text>
-					</view>
-				</view>
-				
-			</view>
-			<!-- 头像名字 -->
-			<view class="my">
-				<image :src="myImgUrl" class="my_img"></image>
-				<text class="my_text">{{myName}}</text>
-			</view>
+		  <!-- 登录模态窗口 -->
+		    <view class="modal" v-if="showLoginModal">
+		      <view class="modal-content">
+		        <view class="input-field">
+		          <text>学号:</text>
+		          <input type="number" v-model="student_id" placeholder="请输入学号" />
+		        </view>
+		        <view class="input-field">
+		          <text>密码:</text>
+		          <input type="password" v-model="password" placeholder="请输入密码" />
+		        </view>
+		        <button @click="submitLogin">确认</button>
+		      </view>
+		    </view>
+		  
+        </view>
+	  </view>
+		<!-- 头像名字 -->
+		<view class="my">
+			<image :src="myImgUrl" class="my_img"></image>
+			<text class="my_text">{{ myName }}</text>
 		</view>
-
-	</view>
+    </view>
+  </view>
 </template>
 
+<script setup>
+import { ref } from 'vue';
 
-<script>
-	export default {
-		
-		data() {
-			return {
-				// 背景图和用户名从后端获取
-				myName:'豆皮',
-				myImgUrl:'https://www.freeimg.cn/i/2024/02/07/65c2f64ebb38d.png',
-				list:[
-					{name:'全部参加', pic:'https://www.freeimg.cn/i/2024/02/15/65cd870a725bc.png'},
-					{name:'已完成', pic:'https://www.freeimg.cn/i/2024/02/15/65cd860bcb186.png'},
-					{name:'待参加', pic:'https://www.freeimg.cn/i/2024/02/15/65cd860be609d.png' },
-				],
-				
-				// list_width:670 + 'rpx',
-			};
-				
-		},
-		
-		// 生命周期函数？
-		onLoad(){
-			this.get_myImgUrl();
-		},
-		
-		// 这里面写功能函数嘛？
-		methods:{
-			
-			// 获取头像
-			get_myImgUrl(){
-				// 这里是新的头像url 用this将原来的默认myIngUrl替换为新的
-				const Url = 'https://www.freeimg.cn/i/2024/02/07/65c2f64ebb38d.png';
-				this.myImgUrl=Url;
-			},
-			
-			// 编辑个人信息跳转
-			navigateToedit(){
-				uni.navigateTo({
-					url:'/pages/edit/edit'
-				})
-			},
-			
-		}
-	}
-	
+const isLoggedIn = ref(false); // 用户是否登录
+const showLoginModal = ref(false); // 是否显示登录模态
+const student_id = ref(''); // 用户名
+const password = ref(''); // 密码
+const myImgUrl = ref('');
+const defaultImg = ref('https://www.freeimg.cn/i/2024/02/07/65c2f64ebb38d.png')
+const myName = ref('游客');
+myImgUrl.value = defaultImg.value;
+
+
+// 选项
+const list = ref([
+  { name: '全部参加', pic: 'https://www.freeimg.cn/i/2024/02/15/65cd870a725bc.png', path: '/pages/alljoin/alljoin' },
+  { name: '已完成', pic: 'https://www.freeimg.cn/i/2024/02/15/65cd860bcb186.png', path: '/pages/finished/finished' },
+  { name: '待参加', pic: 'https://www.freeimg.cn/i/2024/02/15/65cd860be609d.png', path: '/pages/waitjoin/waitjoin' },
+]);
+
+
+function navigateTo_mypublish() {
+  uni.navigateTo({
+    url: '/pages/mypublish/mypublish'
+  });
+}
+
+function navigateTo_edit() {
+  uni.navigateTo({
+    url: '/pages/edit/edit'
+  });
+}
+
+// 提交登录信息
+function submitLogin() {
+  console.log('登录信息：', student_id.value, password.value);
+  showLoginModal.value = false;
+  
+  // 发送 HTTP 请求到后端
+    uni.request({
+      url: 'http://127.0.0.1:8080/lecturelogin', // 修改成你的后端登录接口地址
+      method: 'POST',
+      data: {
+        student_id: student_id.value,
+        password: password.value
+      },
+      success(res) {
+        console.log('请求成功',res.data); // 输出后端返回的数据
+        // 处理后端返回的数据，例如显示登录结果
+      },
+      fail(err) {
+        console.error('请求失败',err);
+      }
+    });
+}
+
+
 </script>
 
 <style lang="scss">
@@ -209,7 +231,21 @@
 						align-items: center;
 						margin: 0rpx 15rpx;
 					}
-					
+					.sign_up{
+						height: 100rpx;
+						margin: 80rpx 150rpx 240rpx 150rpx;
+						background-color: #55aa00;
+						border-radius: 30rpx;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						
+						text{
+							font-size: 36rpx;
+							color: #ffffff;
+							letter-spacing: 5rpx;
+						}
+					}
 					.sign_out{
 						// width: 500rpx;
 						height: 100rpx;
@@ -257,7 +293,27 @@
 				}
 			}
 		}
+		.modal {
+		  position: fixed;
+		  top: 0;
+		  left: 0;
+		  right: 0;
+		  bottom: 0;
+		  background-color: rgba(0, 0, 0, 0.6);
+		  display: flex;
+		  justify-content: center;
+		  align-items: center;
+		}
+		
+		.modal-content {
+		  background: white;
+		  padding: 20px;
+		  border-radius: 5px;
+		}
+		
+		.input-field {
+		  margin-bottom: 10px;
+		}
 		
 	}
-	
 </style>

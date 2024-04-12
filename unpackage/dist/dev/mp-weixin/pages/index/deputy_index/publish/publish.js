@@ -9,6 +9,8 @@ const _sfc_main = {
     const lectureIntroduction = common_vendor.ref("");
     const lectureAnnouncement = common_vendor.ref("");
     const location = common_vendor.ref("");
+    const lectureImage = common_vendor.ref("");
+    const DellectureImage = common_vendor.ref("");
     function dateChanged(event) {
       lectureDate.value = event.detail.value;
     }
@@ -21,19 +23,31 @@ const _sfc_main = {
           const tempFilePaths = chooseImageRes.tempFilePaths;
           common_vendor.index.uploadFile({
             url: "http://127.0.0.1:8080/upload",
-            // 接口URL
+            // 您的服务器端点
             filePath: tempFilePaths[0],
             name: "file",
-            // 对应请求参数中的file
-            // formData: {
-            //     // 这里可以添加其他参数，如permission, strategy_id等
-            // },
-            // header: {
-            //     'Authorization': '315|Si0Y3HfufBwbEG50XT02eMTS5ZK5kENEUcZ8iJaM', // 需要服务器端支持
-            //     'Content-Type': 'multipart/form-data'
-            // },
             success: (uploadFileRes) => {
-              console.log("好像成功了？", uploadFileRes.data);
+              const data = JSON.parse(uploadFileRes.data);
+              console.log("上传结果", data);
+              if (data.status) {
+                lectureImage.value = data.data.links.url;
+                DellectureImage.value = data.data.links.delete_url;
+                console.log("图片URL:", lectureImage.value);
+              } else {
+                common_vendor.index.showModal({
+                  title: "上传失败",
+                  content: data.message,
+                  showCancel: false
+                });
+              }
+            },
+            fail: (uploadFileErr) => {
+              console.error("上传失败", uploadFileErr);
+              common_vendor.index.showModal({
+                title: "上传失败",
+                content: "无法连接到服务器",
+                showCancel: false
+              });
             }
           });
         }
@@ -45,9 +59,14 @@ const _sfc_main = {
         // lectureDate: lectureDate.value,
         // lectureTime: lectureTime.value,
         lecture_time: lectureDate.value + " " + lectureTime.value,
+        // 多文字
         lecture_introduction: lectureIntroduction.value,
         lecture_announcement: lectureAnnouncement.value,
-        lecture_image_url: "https://www.freeimg.cn/i/2024/02/07/65c2f64ebba77.png",
+        // 图像
+        lecture_image_url: lectureImage.value,
+        lecture_image_delurl: DellectureImage.value,
+        // 地理位置
+        longitude: location.value.delete_url,
         location: location.value.address,
         latitude: location.value.latitude,
         longitude: location.value.longitude
@@ -79,24 +98,29 @@ const _sfc_main = {
       common_vendor.index.$off("locationSelected");
     });
     return (_ctx, _cache) => {
-      return {
-        a: lectureName.value,
-        b: common_vendor.o(($event) => lectureName.value = $event.detail.value),
-        c: common_vendor.t(lectureDate.value),
-        d: lectureDate.value,
-        e: common_vendor.o(dateChanged),
-        f: common_vendor.t(lectureTime.value),
-        g: lectureTime.value,
-        h: common_vendor.o(timeChanged),
-        i: common_vendor.o(UploadImage),
-        j: lectureIntroduction.value,
-        k: common_vendor.o(($event) => lectureIntroduction.value = $event.detail.value),
-        l: lectureAnnouncement.value,
-        m: common_vendor.o(($event) => lectureAnnouncement.value = $event.detail.value),
-        n: common_vendor.t(location.value.address),
-        o: common_vendor.o(submitForm),
-        p: common_vendor.o(navigateToMap)
-      };
+      return common_vendor.e({
+        a: lectureImage.value
+      }, lectureImage.value ? {
+        b: lectureImage.value
+      } : {
+        c: common_vendor.o(UploadImage)
+      }, {
+        d: lectureName.value,
+        e: common_vendor.o(($event) => lectureName.value = $event.detail.value),
+        f: common_vendor.t(lectureDate.value),
+        g: lectureDate.value,
+        h: common_vendor.o(dateChanged),
+        i: common_vendor.t(lectureTime.value),
+        j: lectureTime.value,
+        k: common_vendor.o(timeChanged),
+        l: lectureIntroduction.value,
+        m: common_vendor.o(($event) => lectureIntroduction.value = $event.detail.value),
+        n: lectureAnnouncement.value,
+        o: common_vendor.o(($event) => lectureAnnouncement.value = $event.detail.value),
+        p: common_vendor.t(location.value.address),
+        q: common_vendor.o(submitForm),
+        r: common_vendor.o(navigateToMap)
+      });
     };
   }
 };

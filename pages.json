@@ -96,6 +96,22 @@
 				"navigationBarTitleText" : "测试页面",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+			"path" : "pages/mypublish/mypublish",
+			"style" : 
+			{
+				"navigationBarTitleText" : "我的发布",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/waitjoin/waitjoin",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
 		}
 		
 		
