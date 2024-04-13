@@ -146,10 +146,10 @@
 			
 	onMounted(() => {
 		uni.request({
-			url: 'http://127.0.0.1:8000/lectures',
+			url: 'http://127.0.0.1:8080/lecturesInfo',
 			method: 'GET',
 			success(res) {
-				lectures.value = res.data;
+				lectures.value = res.data.result;
 				console.log(lectures.value);
 			},
 			fail(err) {

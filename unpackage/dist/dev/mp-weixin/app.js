@@ -14,6 +14,7 @@ if (!Math) {
   "./pages/index/deputy_index/obtainLocation/obtainLocation.js";
   "./pages/test/test.js";
   "./pages/mypublish/mypublish.js";
+  "./pages/waitjoin/waitjoin.js";
 }
 const _sfc_main = {
   onLaunch: function() {

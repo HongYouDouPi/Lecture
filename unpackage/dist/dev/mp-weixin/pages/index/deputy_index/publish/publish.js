@@ -22,8 +22,8 @@ const _sfc_main = {
         success: (chooseImageRes) => {
           const tempFilePaths = chooseImageRes.tempFilePaths;
           common_vendor.index.uploadFile({
-            url: "http://127.0.0.1:8080/upload",
-            // 您的服务器端点
+            url: "http://127.0.0.1:8080/uploadImage",
+            // 上传图片单独端口
             filePath: tempFilePaths[0],
             name: "file",
             success: (uploadFileRes) => {
@@ -78,7 +78,7 @@ const _sfc_main = {
           method: "POST",
           data
         });
-        console.log(response.data);
+        console.log("上传信息:", response.data);
       } catch (error) {
         console.error("上传错误：Error submitting form:", error);
       }

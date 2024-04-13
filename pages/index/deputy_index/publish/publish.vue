@@ -75,22 +75,15 @@
 	    success: chooseImageRes => {
 	      const tempFilePaths = chooseImageRes.tempFilePaths;
 	      uni.uploadFile({
-	        url: 'http://127.0.0.1:8080/upload', // 您的服务器端点
+	        url: 'http://127.0.0.1:8080/uploadImage', // 上传图片单独端口
 	        filePath: tempFilePaths[0],
 	        name: 'file',
 	        success: uploadFileRes => {
+				// console.log("上传结果", uploadFileRes.data);
+				// 解析传回来的json
 				const data = JSON.parse(uploadFileRes.data);
 				console.log("上传结果", data);
 				
-				// if (data && data.links) {
-					
-				// 	// console.log("访问地址1",data.links.url);
-				// 	console.log("访问地址2",data.links);
-				//   // lectureImage.value = data.links.url;
-				//   console.log("访问地址", lectureImage.value);
-				// } else {
-				//   console.error("上传成功，但无法获取图片链接");
-				// }
 				if (data.status) {
 					// 如果上传成功，则保存图片URL到lectureImage变量
 					lectureImage.value = data.data.links.url; // 获取图片URL并赋值
@@ -146,7 +139,7 @@ async function submitForm() {
 			method: 'POST',
 			data: data
 		});
-		console.log(response.data);
+		console.log('上传信息:',response.data);
     } catch (error) {
       console.error('上传错误：Error submitting form:', error);
     }

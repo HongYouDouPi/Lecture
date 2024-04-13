@@ -156,6 +156,13 @@
   display: flex;
   align-items: center;
 }
+.content .content_item .content_text .basic .time_location .location_visitor .location text {
+  width: 220rpx;
+  overflow: hidden;
+  /* 超出部分隐藏 */
+  white-space: nowrap;
+  /* 防止文本换行，强制在一行内显示 */
+}
 .content .content_item .content_text .basic .time_location .location_visitor .visitor {
   height: 38rpx;
   width: 110rpx;

@@ -3,8 +3,8 @@
         <view class="mine">
             <view class="my">
                 <view class="my_basic">
-                    <image :src="myImgUrl" mode="aspectFit"></image>
-                    <text>{{ name }}</text>
+                    <image :src="my_image_url" mode="aspectFit"></image>
+                    <text>{{ username }}</text>
                 </view>
                 <view class="my_avtiveInformation">
                     <view class="">参加次数</view>
@@ -48,17 +48,17 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref,onMounted } from 'vue';
 
-const genderSelcet = ref(['男', '女', '神秘']);
-const name = '红油豆皮';
-const myImgUrl = 'https://www.freeimg.cn/i/2024/02/07/65c2f64ebb38d.png';
-
-const studentId = ref('');
-const departmentClass = ref('');
-const phoneNumber = ref('');
+const username = ref('');
+const gender = ref('');
+const my_image_url = 'https://www.freeimg.cn/i/2024/02/07/65c2f64ebb38d.png';
+const student_id = ref('');
+const college = ref('');
+const phone_number = ref('');
 const email = ref('');
 
+const genderSelcet = ref(['男', '女', '神秘']);
 // 处理性别选择改变事件
 function handleGenderChange(event) {
     const selectedIndex = event.detail.value;
@@ -67,9 +67,39 @@ function handleGenderChange(event) {
 
 // 保存信息函数
 function saveInformation() {
+	uni.request({
+		url:'http://127.0.0.1:8080/user_edit',
+		method:'POST',
+		data:{
+			
+		}
+	})
     // 添加保存信息的逻辑代码，例如将数据发送给后端
     console.log('Saving information...');
 }
+
+onMounted(()=>{
+	// 先加载用户信息
+	uni.request({
+		url:'http://127.0.0.1:8080/userInfo',
+		method:'GET',
+		data:{
+			
+		},
+		
+		success(res){
+			var data = res
+			username.value = data.user_name;
+			gender.value = data.gender;
+			my_image_url.value = data.my_image_url;
+			student_id.value = data.student_id;
+			college.value = data.college;
+			phone_number.value = data.phone_number;
+			email.value = data.email;
+					
+		}
+	})
+})
 </script>
 
 <style lang="scss">

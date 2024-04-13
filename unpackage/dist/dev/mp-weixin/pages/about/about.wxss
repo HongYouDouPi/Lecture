@@ -93,6 +93,20 @@
   align-items: center;
   margin: 0rpx 15rpx;
 }
+.whole .mine .list .function .sign_up {
+  height: 100rpx;
+  margin: 80rpx 150rpx 240rpx 150rpx;
+  background-color: #55aa00;
+  border-radius: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.whole .mine .list .function .sign_up text {
+  font-size: 36rpx;
+  color: #ffffff;
+  letter-spacing: 5rpx;
+}
 .whole .mine .list .function .sign_out {
   height: 100rpx;
   margin: 80rpx 150rpx 240rpx 150rpx;
@@ -131,7 +145,29 @@
   border-radius: 20rpx;
 }
 .whole .mine .my .my_text {
+  display: flex;
+  justify-content: center;
   height: 60rpx;
+  width: 400rpx;
   font-size: 40rpx;
   font-weight: 700;
+}
+.whole .modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.whole .modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+}
+.whole .input-field {
+  margin-bottom: 10px;
 }

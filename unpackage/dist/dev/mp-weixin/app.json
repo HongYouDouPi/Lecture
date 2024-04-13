@@ -11,7 +11,8 @@
     "pages/index/deputy_index/moreExciting/moreExciting",
     "pages/index/deputy_index/obtainLocation/obtainLocation",
     "pages/test/test",
-    "pages/mypublish/mypublish"
+    "pages/mypublish/mypublish",
+    "pages/waitjoin/waitjoin"
   ],
   "window": {
     "navigationBarTextStyle": "black",

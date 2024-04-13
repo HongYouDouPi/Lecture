@@ -2,7 +2,7 @@
   <view class="whole">
     <!-- 我-头像和名字 -->
     <view class="mine">
-      <image :src="myImgUrl" mode="aspectFill" class="my_background"></image>
+      <image :src="my_image_url" mode="aspectFill" class="my_background"></image>
       <!-- 信息栏 -->
       <view class="list">
         <!-- 参加/未完成 -->
@@ -75,8 +75,8 @@
 	  </view>
 		<!-- 头像名字 -->
 		<view class="my">
-			<image :src="myImgUrl" class="my_img"></image>
-			<text class="my_text">{{ myName }}</text>
+			<image :src="my_image_url" class="my_img"></image>
+			<text class="my_text">{{user_name+student_id}}</text>
 		</view>
     </view>
   </view>
@@ -89,11 +89,10 @@ const isLoggedIn = ref(false); // 用户是否登录
 const showLoginModal = ref(false); // 是否显示登录模态
 const student_id = ref(''); // 用户名
 const password = ref(''); // 密码
-const myImgUrl = ref('');
+const my_image_url = ref('');
 const defaultImg = ref('https://www.freeimg.cn/i/2024/02/07/65c2f64ebb38d.png')
-const myName = ref('游客');
-myImgUrl.value = defaultImg.value;
-
+const user_name = ref('游客');
+my_image_url.value = defaultImg.value;
 
 // 选项
 const list = ref([
@@ -120,16 +119,33 @@ function submitLogin() {
   console.log('登录信息：', student_id.value, password.value);
   showLoginModal.value = false;
   
+	// 在需要获取用户信息的地方调用该方法
+	wx.getUserInfo({
+	  success: function(res) {
+	    var userInfo = res.userInfo;
+	    user_name.value = userInfo.nickName; // 用户昵称
+	    my_image_url.value = userInfo.avatarUrl; // 用户头像图片 URL
+	    console.log("用户昵称：" + user_name.value );
+	    console.log("用户头像：" + my_image_url.value);
+	  },
+	  fail: function(res) {
+	    console.log("用户拒绝授权");
+	  }
+	});
+	
   // 发送 HTTP 请求到后端
     uni.request({
-      url: 'http://127.0.0.1:8080/lecturelogin', // 修改成你的后端登录接口地址
+      url: 'http://127.0.0.1:8080/lecturelogin', 
       method: 'POST',
       data: {
-        student_id: student_id.value,
-        password: password.value
+        student_id : student_id.value,
+        password : password.value,
+		user_name : user_name.value,
+		my_image_url : my_image_url.value
       },
+	   dataType: 'text', // 指定返回数据类型为文本
       success(res) {
-        console.log('请求成功',res.data); // 输出后端返回的数据
+        console.log('登陆成功',res.data); // 输出后端返回的数据
         // 处理后端返回的数据，例如显示登录结果
       },
       fail(err) {
@@ -137,7 +153,6 @@ function submitLogin() {
       }
     });
 }
-
 
 </script>
 
@@ -287,7 +302,10 @@ function submitLogin() {
 				}
 				
 				.my_text{
+					display: flex;
+					justify-content: center;
 					height: 60rpx;
+					width: 400rpx;
 					font-size: 40rpx;
 					font-weight: 700;
 				}

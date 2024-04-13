@@ -28,9 +28,7 @@ const _sfc_main = {
             b: common_vendor.t(lecture.lecture_name),
             c: common_vendor.t(formatDate(lecture.lecture_time)),
             d: common_vendor.t(lecture.location),
-            e: common_vendor.t(lecture.lecture_introduction),
-            f: common_vendor.t(lecture.lecture_announcement),
-            g: index
+            e: index
           };
         })
       };

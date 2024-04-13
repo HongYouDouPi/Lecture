@@ -1,7 +1,7 @@
 <template>
 	<view class="whole">
 		<view class="show">
-			<text class="header">看看都有些啥</text>
+			<text class="title">看看都有些啥</text>
 		</view>
 		
 		<view class="content">
@@ -48,11 +48,10 @@ onMounted(() => {
 });
 </script>
 
-<style>
+<style lang="scss">
 	.whole{
 		background-color: #e3e3e3;
-		
-		.show{
+		.show {
 			width: 100%;
 			display: flex;
 			/* align-items: center; */
@@ -61,12 +60,12 @@ onMounted(() => {
 			font-weight: bold;
 			background-color: #ffffff;
 			padding: 10px 0; /* 增加上下的填充 */
-			.header {
-			  font-size: 20px; /* 字体大小调整 */
-			  color: #333;
-			  
-			}
 		}
+		.title{
+		  font-size: 20px; /* 字体大小调整 */
+		  color: #333;
+		}
+	}
 		
 		
 		.content {
@@ -114,7 +113,7 @@ onMounted(() => {
 		.content_item:hover {
 		  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1); /* 悬停时的阴影效果 */
 		}
-	}
+	
 
 
 </style>
