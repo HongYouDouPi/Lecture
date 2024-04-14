@@ -17,6 +17,16 @@ const _sfc_main = {
     function timeChanged(event) {
       lectureTime.value = event.detail.value;
     }
+    function resetLectureInfo() {
+      lectureName.value = "";
+      lectureDate.value = "";
+      lectureTime.value = "";
+      lectureIntroduction.value = "";
+      lectureAnnouncement.value = "";
+      location.value = "";
+      lectureImage.value = "";
+      DellectureImage.value = "";
+    }
     function UploadImage() {
       common_vendor.index.chooseImage({
         success: (chooseImageRes) => {
@@ -27,8 +37,8 @@ const _sfc_main = {
             filePath: tempFilePaths[0],
             name: "file",
             success: (uploadFileRes) => {
-              const data = JSON.parse(uploadFileRes.data);
-              console.log("上传结果", data);
+              console.log("上传结果", uploadFileRes);
+              let data = JSON.parse(uploadFileRes.data);
               if (data.status) {
                 lectureImage.value = data.data.links.url;
                 DellectureImage.value = data.data.links.delete_url;
@@ -82,6 +92,7 @@ const _sfc_main = {
       } catch (error) {
         console.error("上传错误：Error submitting form:", error);
       }
+      resetLectureInfo();
     }
     function navigateToMap() {
       common_vendor.index.navigateTo({

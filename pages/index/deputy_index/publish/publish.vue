@@ -68,6 +68,18 @@
   function timeChanged(event) {
     lectureTime.value = event.detail.value;
   }
+  // 重置信息
+  function resetLectureInfo() {
+      lectureName.value = '';
+      lectureDate.value = '';
+      lectureTime.value = '';
+      lectureIntroduction.value = '';
+      lectureAnnouncement.value = '';
+      location.value = '';
+      lectureImage.value = '';
+      DellectureImage.value = '';
+  }
+
   
   // 选择图片并上传
 	function UploadImage() {
@@ -79,10 +91,10 @@
 	        filePath: tempFilePaths[0],
 	        name: 'file',
 	        success: uploadFileRes => {
-				// console.log("上传结果", uploadFileRes.data);
+				console.log("上传结果", uploadFileRes);
 				// 解析传回来的json
-				const data = JSON.parse(uploadFileRes.data);
-				console.log("上传结果", data);
+				let data = JSON.parse(uploadFileRes.data);
+				// console.log("上传结果", data);
 				
 				if (data.status) {
 					// 如果上传成功，则保存图片URL到lectureImage变量
@@ -90,7 +102,7 @@
 					DellectureImage.value = data.data.links.delete_url
 					console.log("图片URL:", lectureImage.value); // 输出图片URL，以便调试
 				} else {
-					// 这里处理上传失败的情况
+					// 这里处理上传失败的情况-弹窗
 					uni.showModal({
 						title: '上传失败',
 						content: data.message,
@@ -99,6 +111,7 @@
 				}
 	        },
 	        fail: uploadFileErr => {
+				// let data = JSON.parse(uploadFileErr.data);
 	          // 这里处理网络错误或其他错误的情况
 	          console.error("上传失败", uploadFileErr);
 	          uni.showModal({
@@ -110,7 +123,7 @@
 	      });
 	    }
 	  });
-	}
+}
 
   // 表单提交- 提交到数据库
 async function submitForm() {
@@ -143,6 +156,7 @@ async function submitForm() {
     } catch (error) {
       console.error('上传错误：Error submitting form:', error);
     }
+	resetLectureInfo();
 }
   
 // 跳转到地图逻辑

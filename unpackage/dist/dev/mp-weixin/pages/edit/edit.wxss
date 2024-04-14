@@ -60,6 +60,13 @@
   align-items: center;
   justify-content: center;
 }
+.whole .mine .my .my_basic .my_basic_input {
+  font-size: 50rpx;
+  font-weight: bold;
+  letter-spacing: 4rpx;
+  margin-top: 10rpx;
+  height: 30rpx;
+}
 .whole .mine .my .my_avtiveInformation {
   width: 210rpx;
   height: 100%;
@@ -77,6 +84,9 @@
 }
 .my_information .info_item text {
   margin-right: 10rpx;
+}
+.my_information .info_item picker {
+  width: 100rpx;
 }
 .my_information .info_item input {
   flex: 1;
