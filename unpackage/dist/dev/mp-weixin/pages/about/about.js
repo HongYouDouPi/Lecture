@@ -3,6 +3,7 @@ const common_vendor = require("../../common/vendor.js");
 const _sfc_main = {
   __name: "about",
   setup(__props) {
+    const store = common_vendor.useStore();
     const isLoggedIn = common_vendor.ref(false);
     const showLoginModal = common_vendor.ref(false);
     const student_id = common_vendor.ref("");
@@ -17,49 +18,88 @@ const _sfc_main = {
       {
         name: "全部参加",
         pic: "https://www.freeimg.cn/i/2024/02/15/65cd870a725bc.png",
-        path: "/pages/alljoin/alljoin"
+        path: "all"
       },
       {
         name: "已完成",
         pic: "https://www.freeimg.cn/i/2024/02/15/65cd860bcb186.png",
-        path: "/pages/finished/finished"
+        path: "finish"
       },
       {
         name: "待参加",
         pic: "https://www.freeimg.cn/i/2024/02/15/65cd860be609d.png",
-        path: "/pages/waitjoin/waitjoin"
+        path: "jion"
       }
     ]);
-    function navigateTo(path2) {
+    function showLogin() {
+      common_vendor.index.showModal({
+        title: "先登录叭！",
+        content: "登陆解锁更多功能",
+        showCancel: false
+      });
+    }
+    function showUnline() {
+      common_vendor.index.showModal({
+        title: "功能待开发！",
+        content: "期待后续上线叭！",
+        showCancel: false
+      });
+    }
+    function navigateTo(path) {
       if (isLoggedIn.value) {
         common_vendor.index.navigateTo({
-          url: path2
+          url: `/pages/join/join?style=${path}&student_id=${student_id.value}`
         });
       } else {
-        console.log(`User is not logged in. Cannot navigate from ${path2}.`);
+        showLogin();
+        console.log(`User is not logged in. Cannot navigate from ${path}.`);
       }
     }
     function navigateTo_connect() {
       if (isLoggedIn.value) {
-        common_vendor.index.navigateTo({
-          url: path
-        });
+        showUnline();
       } else {
-        console.log(`User is not logged in. Cannot navigate from ${source}.`);
+        showLogin();
+        console.log(`User is not logged in. Cannot navigate`);
       }
     }
     function navigateTo_share() {
+      if (isLoggedIn.value) {
+        showUnline();
+      } else {
+        showLogin();
+        console.log(`User is not logged in. Cannot navigate`);
+      }
     }
     function navigateTo_mypublish() {
-      common_vendor.index.navigateTo({
-        url: "/pages/mypublish/mypublish"
-      });
+      if (isLoggedIn.value) {
+        common_vendor.index.navigateTo({
+          url: "/pages/mypublish/mypublish"
+        });
+      } else {
+        showLogin();
+        console.log(`User is not logged in. Cannot navigate`);
+      }
     }
     function navigateTo_edit() {
-      common_vendor.index.navigateTo({
-        // url: '/pages/edit/edit',
-        url: `/pages/edit/edit?student_id=${student_id.value}`
-      });
+      if (isLoggedIn.value) {
+        common_vendor.index.navigateTo({
+          url: `/pages/edit/edit?student_id=${student_id.value}`
+        });
+      } else {
+        showLogin();
+        console.log(`User is not logged in. Cannot navigate `);
+      }
+    }
+    function navigateTo_star() {
+      if (isLoggedIn.value) {
+        common_vendor.index.navigateTo({
+          url: `/pages/star/star?student_id=${student_id.value}`
+        });
+      } else {
+        showLogin();
+        console.log(`User is not logged in. Cannot navigate`);
+      }
     }
     function submitLogin() {
       showLoginModal.value = false;
@@ -68,7 +108,8 @@ const _sfc_main = {
         method: "POST",
         data: {
           student_id: insert_student_id.value,
-          password: insert_password.value
+          password: insert_password.value,
+          user_name: "游客"
         },
         success(res) {
           console.log("登录信息：", res);
@@ -77,6 +118,8 @@ const _sfc_main = {
             student_id.value = insert_student_id.value;
             password.value = insert_password.value;
             user_name.value = res.data.user_name;
+            my_image_url.value = res.data.my_image_url;
+            store.commit("setStudentId", insert_student_id.value);
           } else if (res.statusCode === 401) {
             common_vendor.index.showToast({
               title: "用户名或密码错误",
@@ -108,6 +151,7 @@ const _sfc_main = {
       password.value = "";
       my_image_url.value = defaultImg.value;
       user_name.value = "游客";
+      store.commit("setStudentId", "");
     }
     common_vendor.onShow(() => {
       const query = student_id.value ? `?student_id=${student_id.value}` : "";
@@ -117,6 +161,7 @@ const _sfc_main = {
         success(res) {
           if (res.data.user_name) {
             user_name.value = res.data.user_name;
+            my_image_url.value = res.data.my_image_url;
             console.log("页面新信息:", res.data);
           } else {
             console.log("先登录叭!");
@@ -138,31 +183,32 @@ const _sfc_main = {
             d: common_vendor.o(($event) => navigateTo(item.path), index)
           };
         }),
-        c: common_vendor.o(navigateTo_mypublish),
-        d: common_vendor.o(navigateTo_edit),
-        e: common_vendor.o(navigateTo_connect),
-        f: common_vendor.o(navigateTo_share),
-        g: !isLoggedIn.value
+        c: common_vendor.o(navigateTo_star),
+        d: common_vendor.o(navigateTo_mypublish),
+        e: common_vendor.o(navigateTo_edit),
+        f: common_vendor.o(navigateTo_connect),
+        g: common_vendor.o(navigateTo_share),
+        h: !isLoggedIn.value
       }, !isLoggedIn.value ? {
-        h: common_vendor.o(($event) => showLoginModal.value = true)
+        i: common_vendor.o(($event) => showLoginModal.value = true)
       } : {}, {
-        i: isLoggedIn.value
+        j: isLoggedIn.value
       }, isLoggedIn.value ? {
-        j: common_vendor.o(unLoginIn)
+        k: common_vendor.o(unLoginIn)
       } : {}, {
-        k: showLoginModal.value
+        l: showLoginModal.value
       }, showLoginModal.value ? {
-        l: insert_student_id.value,
-        m: common_vendor.o(($event) => insert_student_id.value = $event.detail.value),
-        n: insert_password.value,
-        o: common_vendor.o(($event) => insert_password.value = $event.detail.value),
-        p: common_vendor.o(submitLogin)
+        m: insert_student_id.value,
+        n: common_vendor.o(($event) => insert_student_id.value = $event.detail.value),
+        o: insert_password.value,
+        p: common_vendor.o(($event) => insert_password.value = $event.detail.value),
+        q: common_vendor.o(submitLogin)
       } : {}, {
-        q: my_image_url.value,
-        r: common_vendor.t(user_name.value)
+        r: my_image_url.value,
+        s: common_vendor.t(user_name.value)
       });
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/Aser/Graduation_project/Lecture/pages/about/about.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/Aser/Uniapp_project/Lecture/pages/about/about.vue"]]);
 wx.createPage(MiniProgramPage);

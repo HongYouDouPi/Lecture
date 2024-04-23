@@ -10,20 +10,23 @@
 		<!-- 功能栏 -->
 		<view class="function">
 			<view v-for="(item, index) in function_index" :key="index"
-				:class="['function_item', `function_${index + 1}_item`]" @click="navigateTo(item.url)">
+				:class="['function_item', `function_${index + 1}_item`]" @click="student_id ? navigateTo(item.url) : showModal()">
 				<image :src="item.pic" mode="aspectFit"></image>
 				<text class="function_text">{{ item.name }}</text>
 				<text class="note_text">{{ item.note_text }}</text>
+				<!-- 测试 -->
+				<!-- <text>A{{student_id}}</text> -->
 
 				<!-- 添加模糊 -->
 				<view :class="['vague', `vague_${index + 1}`]"></view>
 			</view>
 		</view>
-		<!-- 推荐讲座 -->
+		
+		<!-- 热门讲座 -->
 		<view class="scroll_recommand">
 			<!-- 上栏 -->
 			<view class="recommand_text">
-				<text>{{ reconmmandText }}</text>
+				<text>{{ hotText }}</text>
 				<view class="more_recommand" @click="navigaToActivity">
 					<text>更多</text>
 					<image src="/static/image/icon/右箭头.png" mode="aspectFit"></image>
@@ -31,11 +34,11 @@
 			</view>
 			<!-- 下栏 -->
 			<scroll-view class="scroll" scroll-x="ture">
-				<view class="scroll_item" v-for="(item) in scroll_recommend" :key="item.id">
+				<view class="scroll_item" v-for="(item) in hot_lecture" :key="item.id">
 					<view class="item_composition" @click="navigateToDetail(item)">
-						<image :src="item.pic" mode="aspectFit"></image>
-						<text>{{ item.name }}{{ item.id }}</text>
-						<text style="color: #919191;">{{ item.time }}</text>
+						<image :src="item.lecture_image_url" mode="aspectFit"></image>
+						<text>{{ item.lecture_name }}</text>
+						<text style="color: #919191;">{{ item.lecture_time }}</text>
 					</view>
 				</view>
 			</scroll-view>
@@ -64,11 +67,11 @@
 
 		</view>
 
-		<!-- 热门讲座 -->
+		<!-- 推荐讲座 -->
 		<view class="scroll_new_hot">
 			<!-- 上栏 -->
 			<view class="newhot_text">
-				<text>{{ hotText }}</text>
+				<text>{{ reconmmandText }}</text>
 				<view class="more_new" @click="navigaToActivity">
 					<text>更多</text>
 					<image src="/static/image/icon/右箭头.png" mode="aspectFit"></image>
@@ -80,14 +83,13 @@
 					:class="{ 'selectitem': currentTypeIndex === index }" @click="typeSelectChangeHot(index)">
 					{{ item }}
 				</view>
-
 			</view>
 			<!-- 下栏 -->
 			<scroll-view class="scroll" scroll-x="ture" show-scrollbar="false">
-				<view class="scroll_item" v-for="(item) in hot_lecture" :key="item.id">
+				<view class="scroll_item" v-for="(item) in filterRecommend" :key="item.id">
 					<view class="item_composition" @click="navigateToDetail(item)">
-						<image :src="item.pic" mode="aspectFit"></image>
-						<text>{{ item.name }}{{ item.id }}</text>
+						<image :src="item.lecture_image_url" mode="aspectFit"></image>
+						<text>{{ item.lecture_name }}</text>
 						<!-- <text style="color: #919191;">{{item.time}}</text> -->
 					</view>
 				</view>
@@ -101,9 +103,16 @@
 
 
 <script setup>
-import { computed, onMounted, reactive, ref } from "vue";
+	import { computed, onMounted, reactive, ref } from "vue";
+	import { onShow } from "@dcloudio/uni-app";
+	import { useStore } from 'vuex';
 // import { format, isAfter } from 'date-fns';
 
+// 获取 Vuex Store 实例
+  const store = useStore();
+  // 获取全局的 studentId
+  const student_id = ref('');
+  
 const reconmmandText = ref("推荐讲座");
 const newText = ref("最新讲座");
 const hotText = ref("热门讲座");
@@ -114,12 +123,12 @@ const lectures = ref([])
 const hot_lecture = ref([]);
 // 最新讲座
 const new_lecture = ref([]);
-// 热门讲座
+// 推荐讲座
 const recommend_lecture = ref([]);
 
 // 类别选择器中的内容
 const typeSelect = ref(['美育', '三创', '经典百书', '其他']);
-const filternew = ref([]);
+// const filterRecommend = ref([]);
 const currentTypeIndex = ref(0);  //默认是第一个-美育
 
 // 首页轮播图
@@ -164,60 +173,24 @@ const function_index = reactive(
 			name: "更多精彩",
 			note_text: "敬请期待",
 			// 测试页面
-			url: '/pages/test/test',
+			url: '/pages/index/deputy_index/moreExciting/moreExciting',
 			// 真实的在下面
 			// url: 'deputy_index/moreExciting/moreExciting'
 		}
 	]
 )
-// 推荐滚动视图
-// type表类型(三创=0 美育=1 经典百书=2 其他=3)
-const scroll_recommend = reactive(
-	[
-		{
-			id: 1,
-			name: '测试',
-			pic: 'https://www.freeimg.cn/i/2024/01/31/65b9de9a57c43.jpg',
-			time: '2024/3/11',
-			type: 3
-		},
-		{
-			id: 2,
-			name: '测试',
-			pic: 'https://www.freeimg.cn/i/2024/01/31/65b9de9a57c43.jpg',
-			time: '2024/4/11',
-			type: 1
-		},
-		{
-			id: 3,
-			name: '测试',
-			pic: 'https://www.freeimg.cn/i/2024/01/31/65b9de9a57c43.jpg',
-			time: '2024/1/11',
-			type: 0
-		},
-		{
-			id: 4,
-			name: '测试',
-			pic: 'https://www.freeimg.cn/i/2024/01/31/65b9de9a57c43.jpg',
-			time: '2024/1/11',
-			type: 1
-		},
-		{
-			id: 5,
-			name: '测试',
-			pic: 'https://www.freeimg.cn/i/2024/01/31/65b9de8cb4a8f.jpg',
-			time: '2024/2/11',
-			type: 2
-		},
-		{
-			id: 6,
-			name: '测试',
-			pic: 'https://www.freeimg.cn/i/2024/01/31/65b9de8cb4a8f.jpg',
-			time: '2024/2/11',
-			type: 2
-		}
-	]
-);
+
+function showModal(){
+	// uni.showToast({
+	// 	title: "请先登陆",
+	// 	icon: "none",
+	// });
+	uni.showModal({
+		title: '请先登陆',
+		content: '! 登陆体验更多功能 !',
+		showCancel: false
+	});
+}
 
 //页面跳转
 function navigateTo(link) {
@@ -245,39 +218,48 @@ function navigaToActivityHot() {
 }
 // 跳转到讲座详情页面
 function navigateToDetail(item) {
+	console.log('跳转页面的id',item.lecture_id)
 	uni.navigateTo({
-		url: '/pages/lectureDetail/lectureDetail?itemId=' + item.id
+		url: `/pages/lectureDetail/lectureDetail?lecture_id=${item.lecture_id}`
 	});
 }
 
 
-// 加分类型选择器筛选更新数据-热门
+// 加分类型选择器筛选更新数据-推荐
 function typeSelectChangeHot(index) {
 	// console.log(index);	//检查当先选中的序号
 	currentTypeIndex.value = index;
+	// const filterRecommend = computed(() => {
+	// 	// console.log('filterRecommend',filterRecommend)
+	// 	return recommend_lecture.value.filter(item => item.style === currentTypeIndex.value)
+	// })
 }
-const filterhot = computed(() => {
-	return scroll_recommend.filter(item => item.type === currentTypeIndex.value)
+const filterRecommend = computed(() => {
+	// console.log('filterRecommend',filterRecommend)
+	return recommend_lecture.value.filter(item => item.style === currentTypeIndex.value)
 })
+
 // 简单的时间格式化函数，将时间转换为指定格式的字符串
 function formatTime(time) {
     const date = new Date(time);
 	const year = date.getFullYear().toString();
+	const mouth = (date.getMonth() + 1).toString().padStart(2, '0')
+	const day = date.getDate().toString().padStart(2, '0')
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
     // return `${year}-${hours}:${minutes}`;
-	return `${year}-${hours}`;
+	return `${year}-${mouth}-${day}`;
 }
 
-onMounted(()=>{
+onShow(()=>{
 	uni.request({
 		url: 'http://127.0.0.1:8080/lecturesInfo',
 		method: 'GET',
 		success(res) {
-			lectures.value = res.data.result;
-			// console.log('lectures',lectures.value);
-			console.log('scroll_recommend',scroll_recommend);
+			let tempData =  res.data.result;
 			
+				lectures.value = tempData;
+    			// lectures.value = res.data.result;
 			// 按照lecture_time从最近到最远排序，取前八个讲座数据
             new_lecture.value = lectures.value
                 .filter(item => new Date(item.lecture_time) > new Date()) // 只保留日期在当前日期之后的讲座
@@ -292,18 +274,29 @@ onMounted(()=>{
 			// 按照viewed从大到小排序，取前八个讲座数据
             hot_lecture.value = lectures.value
                 .sort((a, b) => b.viewed - a.viewed)
+				.map(item => ({
+				    ...item,
+				    lecture_time: formatTime(item.lecture_time) // 格式化时间
+				}))
                 .slice(0, 8);
 			 // 默认传来的数据，取前八个讲座数据
-            recommend_lecture.value = scroll_recommend.slice(0, 8);
-			
+            recommend_lecture.value = lectures.value.slice(0, 8);
+			console.log('All Lecture',lectures.value)
 			console.log('New Lecture:', new_lecture.value);
             console.log('Hot Lecture:', hot_lecture.value);
             console.log('Recommend Lecture:', recommend_lecture.value);
 		},
 		fail(err) {
+			uni.showToast({
+				title:'糟糕 页面走丢了',
+				icon : 'loading'
+			})
 			console.error('Failed to fetch lectures:', err);
 		}
 	});
+	// 每次显示的时候学号更新
+	student_id.value = store.getters.studentId;
+	// console.error('studentId',student_id.value)
 })
 
 </script>

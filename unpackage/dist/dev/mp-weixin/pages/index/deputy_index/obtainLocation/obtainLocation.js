@@ -17,6 +17,7 @@ const _sfc_main = {
       longitude: 0,
       address: ""
     });
+    common_vendor.ref(true);
     const qqmapsdk = new libs_qqmapWxJssdk.QQMapWX({
       key: "B3MBZ-NEPW5-QEGIB-IDQMT-GQO4S-SBBSH"
       //这里填写自己申请的key
@@ -116,5 +117,5 @@ const _sfc_main = {
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/Aser/Graduation_project/Lecture/pages/index/deputy_index/obtainLocation/obtainLocation.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/Aser/Uniapp_project/Lecture/pages/index/deputy_index/obtainLocation/obtainLocation.vue"]]);
 wx.createPage(MiniProgramPage);

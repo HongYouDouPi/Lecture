@@ -6,7 +6,7 @@ const _sfc_main = {
     const userInfo = common_vendor.reactive({
       user_name: "",
       gender: "神秘",
-      // my_image_url: 'https://www.freeimg.cn/i/2024/02/07/65c2f64ebb38d.png',
+      my_image_url: "https://www.freeimg.cn/i/2024/02/07/65c2f64ebb38d.png",
       student_id: "",
       college: "",
       phone_number: "",
@@ -39,11 +39,47 @@ const _sfc_main = {
       }
       isEditing.value = false;
     }
+    function UploadImage() {
+      common_vendor.index.chooseImage({
+        success: (chooseImageRes) => {
+          const tempFilePaths = chooseImageRes.tempFilePaths;
+          common_vendor.index.uploadFile({
+            url: "http://127.0.0.1:8080/uploadImage",
+            // 上传图片单独端口
+            filePath: tempFilePaths[0],
+            name: "file",
+            success: (uploadFileRes) => {
+              console.log("上传结果", uploadFileRes);
+              let data = JSON.parse(uploadFileRes.data);
+              if (data.status) {
+                userInfo.my_image_url = data.data.links.url;
+              } else {
+                common_vendor.index.showModal({
+                  title: "上传失败",
+                  content: data.message,
+                  showCancel: false
+                });
+              }
+            },
+            fail: (uploadFileErr) => {
+              console.error("上传失败", uploadFileErr);
+              common_vendor.index.showModal({
+                title: "上传失败",
+                content: "无法连接到服务器",
+                showCancel: false
+              });
+            }
+          });
+        }
+      });
+    }
     function saveInformation() {
       common_vendor.index.request({
         url: "http://127.0.0.1:8080/userEdit",
         method: "POST",
-        data: { ...userInfo },
+        data: {
+          ...userInfo
+        },
         // 展开运算符来复制userInfo对象
         success(res) {
           common_vendor.index.showToast({
@@ -86,30 +122,31 @@ const _sfc_main = {
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: userInfo.my_image_url,
-        b: !isEditing.value
+        b: common_vendor.o(UploadImage),
+        c: !isEditing.value
       }, !isEditing.value ? {
-        c: common_vendor.t(userInfo.user_name),
-        d: common_vendor.o(startEditing)
+        d: common_vendor.t(userInfo.user_name),
+        e: common_vendor.o(startEditing)
       } : {}, {
-        e: isEditing.value
+        f: isEditing.value
       }, isEditing.value ? {
-        f: common_vendor.o(saveUserName),
-        g: editedUserName.value,
-        h: common_vendor.o(($event) => editedUserName.value = $event.detail.value)
+        g: common_vendor.o(saveUserName),
+        h: editedUserName.value,
+        i: common_vendor.o(($event) => editedUserName.value = $event.detail.value)
       } : {}, {
-        i: common_vendor.t(userInfo.gender || "请选择"),
-        j: genderSelcet,
-        k: common_vendor.o(handleGenderChange),
-        l: userInfo.college,
-        m: common_vendor.o(($event) => userInfo.college = $event.detail.value),
-        n: userInfo.phone_number,
-        o: common_vendor.o(($event) => userInfo.phone_number = $event.detail.value),
-        p: userInfo.email,
-        q: common_vendor.o(($event) => userInfo.email = $event.detail.value),
-        r: common_vendor.o(saveInformation)
+        j: common_vendor.t(userInfo.gender || "请选择"),
+        k: genderSelcet,
+        l: common_vendor.o(handleGenderChange),
+        m: userInfo.college,
+        n: common_vendor.o(($event) => userInfo.college = $event.detail.value),
+        o: userInfo.phone_number,
+        p: common_vendor.o(($event) => userInfo.phone_number = $event.detail.value),
+        q: userInfo.email,
+        r: common_vendor.o(($event) => userInfo.email = $event.detail.value),
+        s: common_vendor.o(saveInformation)
       });
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/Aser/Graduation_project/Lecture/pages/edit/edit.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/Aser/Uniapp_project/Lecture/pages/edit/edit.vue"]]);
 wx.createPage(MiniProgramPage);

@@ -1,6 +1,7 @@
 
-.map{
-	width: 750rpx;
-	height: 1000rpx;
+.map {
+		width: 750rpx;
+		height: 1000rpx;
 }
-/* 样式代码 */  
+
+	/* 样式代码 */

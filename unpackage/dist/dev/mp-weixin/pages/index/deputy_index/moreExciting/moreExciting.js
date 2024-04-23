@@ -1,12 +1,25 @@
 "use strict";
 const common_vendor = require("../../../../common/vendor.js");
 const _sfc_main = {
-  data() {
-    return {};
+  __name: "moreExciting",
+  setup(__props) {
+    common_vendor.onMounted(() => {
+      common_vendor.index.showModal({
+        title: "功能待开发",
+        conten: "多多支持吧！",
+        showCancel: false,
+        success: () => {
+          common_vendor.index.navigateBack({
+            delta: 1
+            // 返回上一页
+          });
+        }
+      });
+    });
+    return (_ctx, _cache) => {
+      return {};
+    };
   }
 };
-function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return {};
-}
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/Aser/Graduation_project/Lecture/pages/index/deputy_index/moreExciting/moreExciting.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/Aser/Uniapp_project/Lecture/pages/index/deputy_index/moreExciting/moreExciting.vue"]]);
 wx.createPage(MiniProgramPage);

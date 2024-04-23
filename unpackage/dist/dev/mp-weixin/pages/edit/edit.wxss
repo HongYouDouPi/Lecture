@@ -68,9 +68,14 @@
   height: 30rpx;
 }
 .whole .mine .my .my_avtiveInformation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 20rpx;
   width: 210rpx;
   height: 100%;
-  background-color: #b8b8b8;
+  background-color: #dcdcdc;
 }
 .my_information {
   background-color: #ffffff;
@@ -80,7 +85,7 @@
 .my_information .info_item {
   display: flex;
   align-items: center;
-  margin-bottom: 20rpx;
+  margin: 30rpx 0rpx;
 }
 .my_information .info_item text {
   margin-right: 10rpx;
@@ -102,6 +107,6 @@
   height: 50rpx;
   line-height: 50rpx;
   border-radius: 5rpx;
-  margin-top: 20rpx;
+  padding: 20rpx;
   cursor: pointer;
 }

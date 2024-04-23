@@ -88,7 +88,6 @@
   margin: 0 3rpx;
 }
 .whole .content.data-v-19ce0033 {
-  height: 500rpx;
   margin-top: 20rpx;
   padding: 30rpx;
   background-color: #FFFFFF;
@@ -111,6 +110,20 @@
   font-weight: bold;
   letter-spacing: 1rpx;
   box-shadow: 0rpx 6rpx 2rpx -2rpx #ffaa00;
+}
+.whole .content .LectureParticipant.data-v-19ce0033 {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  height: 500rpx;
+  width: 100%;
+}
+.whole .content .LectureParticipant .Participant.data-v-19ce0033 {
+  display: flex;
+  align-items: center;
+  flex-direction: center;
+  padding: 20rpx;
 }
 .whole .content .LectureDetails.data-v-19ce0033 {
   /* 公告部分的样式 */
@@ -147,4 +160,39 @@
 .contact image.data-v-19ce0033 {
   height: 30rpx;
   width: 30rpx;
+}
+
+/* 新增底部按钮样式 */
+.bottom-bar.data-v-19ce0033 {
+  display: flex;
+  justify-content: space-between;
+  padding: 20rpx;
+  padding-bottom: 100rpx;
+}
+.enroll-button.data-v-19ce0033 {
+  width: 300rpx;
+  height: 100rpx;
+  background-color: #ff8800;
+  color: white;
+  padding: 10rpx 20rpx;
+  border-radius: 5px;
+}
+.enroll-button-disabled.data-v-19ce0033 {
+  width: 300rpx;
+  height: 100rpx;
+  background-color: #ccc;
+  color: white;
+  padding: 10rpx 20rpx;
+  border-radius: 5px;
+}
+.share-button.data-v-19ce0033 {
+  background-color: #555;
+  color: white;
+  padding: 10rpx 20rpx;
+  border-radius: 5px;
+}
+
+/* 新增已举办样式 */
+.hold.held.data-v-19ce0033 {
+  color: #999;
 }

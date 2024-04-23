@@ -12,7 +12,8 @@
     "pages/index/deputy_index/obtainLocation/obtainLocation",
     "pages/test/test",
     "pages/mypublish/mypublish",
-    "pages/waitjoin/waitjoin"
+    "pages/join/join",
+    "pages/star/star"
   ],
   "window": {
     "navigationBarTextStyle": "black",

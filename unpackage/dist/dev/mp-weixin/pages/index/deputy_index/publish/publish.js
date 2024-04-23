@@ -3,6 +3,8 @@ const common_vendor = require("../../../../common/vendor.js");
 const _sfc_main = {
   __name: "publish",
   setup(__props) {
+    const store = common_vendor.useStore();
+    const studentId = store.getters.studentId;
     const lectureName = common_vendor.ref("");
     const lectureDate = common_vendor.ref("");
     const lectureTime = common_vendor.ref("");
@@ -11,6 +13,7 @@ const _sfc_main = {
     const location = common_vendor.ref("");
     const lectureImage = common_vendor.ref("");
     const DellectureImage = common_vendor.ref("");
+    const college = common_vendor.ref("");
     function dateChanged(event) {
       lectureDate.value = event.detail.value;
     }
@@ -66,6 +69,7 @@ const _sfc_main = {
     async function submitForm() {
       const data = {
         lecture_name: lectureName.value,
+        student_id: studentId,
         // lectureDate: lectureDate.value,
         // lectureTime: lectureTime.value,
         lecture_time: lectureDate.value + " " + lectureTime.value,
@@ -79,7 +83,8 @@ const _sfc_main = {
         longitude: location.value.delete_url,
         location: location.value.address,
         latitude: location.value.latitude,
-        longitude: location.value.longitude
+        longitude: location.value.longitude,
+        college: college.value
       };
       try {
         const response = await common_vendor.index.request({
@@ -89,7 +94,31 @@ const _sfc_main = {
           data
         });
         console.log("上传信息:", response.data);
+        if (response.statusCode === 200) {
+          common_vendor.index.showModal({
+            title: "上传成功",
+            content: "可在我的上传中查看",
+            showCancel: false,
+            success: () => {
+              common_vendor.index.navigateBack({
+                delta: 1
+                // 返回上一页
+              });
+            }
+          });
+        } else {
+          common_vendor.index.showModal({
+            title: "糟糕发送走丢了",
+            content: "重新试试看",
+            showCancel: false
+          });
+        }
       } catch (error) {
+        common_vendor.index.showModal({
+          title: "上传失败",
+          content: "填完所有信息再试试看",
+          showCancel: false
+        });
         console.error("上传错误：Error submitting form:", error);
       }
       resetLectureInfo();
@@ -124,16 +153,18 @@ const _sfc_main = {
         i: common_vendor.t(lectureTime.value),
         j: lectureTime.value,
         k: common_vendor.o(timeChanged),
-        l: lectureIntroduction.value,
-        m: common_vendor.o(($event) => lectureIntroduction.value = $event.detail.value),
-        n: lectureAnnouncement.value,
-        o: common_vendor.o(($event) => lectureAnnouncement.value = $event.detail.value),
-        p: common_vendor.t(location.value.address),
-        q: common_vendor.o(submitForm),
-        r: common_vendor.o(navigateToMap)
+        l: college.value,
+        m: common_vendor.o(($event) => college.value = $event.detail.value),
+        n: lectureIntroduction.value,
+        o: common_vendor.o(($event) => lectureIntroduction.value = $event.detail.value),
+        p: lectureAnnouncement.value,
+        q: common_vendor.o(($event) => lectureAnnouncement.value = $event.detail.value),
+        r: common_vendor.t(location.value.address),
+        s: common_vendor.o(submitForm),
+        t: common_vendor.o(navigateToMap)
       });
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/Aser/Graduation_project/Lecture/pages/index/deputy_index/publish/publish.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/Aser/Uniapp_project/Lecture/pages/index/deputy_index/publish/publish.vue"]]);
 wx.createPage(MiniProgramPage);
