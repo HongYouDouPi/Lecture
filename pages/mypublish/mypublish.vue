@@ -31,6 +31,7 @@
 
 	// 获取 Vuex Store 实例
 	const store = useStore();
+	const port = store.getters.port;
 	// 获取全局的 studentId
 	const studentId = store.getters.studentId;
 	const lectures = ref([]);
@@ -57,7 +58,7 @@
 
 	onMounted(() => {
 		uni.request({
-			url: `http://127.0.0.1:8080/lecturesInfo/publish?student_id=${studentId}`,
+			url: `http://${port}/lecturesInfo/publish?student_id=${studentId}`,
 			method: 'GET',
 			success(res) {
 				lectures.value = res.data;

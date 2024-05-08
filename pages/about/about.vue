@@ -275,11 +275,12 @@
 	}
 
 	onShow(() => {
+		let port = store.getters.port;
 		// 执行获取用户信息的操作
 		// 先加载用户信息
 		const query = student_id.value ? `?student_id=${student_id.value}` : "";
 		uni.request({
-			url: `http://127.0.0.1:8080/userInfo${query}`,
+			url: `http://${port}/userInfo${query}`,
 			method: "GET",
 			success(res) {
 				if (res.data.user_name) {

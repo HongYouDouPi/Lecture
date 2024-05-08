@@ -222,7 +222,8 @@
 			student_id: studentId,
 		}
 		uni.request({
-			url: 'http://127.0.0.1:8080/booking/clock',
+			let port = store.getters.port;
+			url: `http://${port}/booking/clock`,
 			method: 'POST',
 			data: data,
 			success(res) {

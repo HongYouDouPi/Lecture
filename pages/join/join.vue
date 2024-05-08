@@ -8,7 +8,8 @@
 			<!-- 显示讲座信息 -->
 			<view class="content_item" v-for="(lecture, index) in lectures" :key="index">
 				<!-- 讲座图片 -->
-				<image :src="lecture.lecture_image_url" mode="aspectFill" class="lecture-image" @click="navigateToDetail(lecture)"></image>
+				<image :src="lecture.lecture_image_url" mode="aspectFill" class="lecture-image"
+					@click="navigateToDetail(lecture)"></image>
 				<view class="content_text">
 					<view class="lectureText">
 						<text class="lecture-name">{{ lecture.lecture_name }}</text>
@@ -66,18 +67,19 @@
 			url: `/pages/lectureDetail/lectureDetail?lecture_id=${item.lecture_id}`
 		});
 	}
-	
+
 	// 跳转到打卡
-	function clockLecture(item){
+	function clockLecture(item) {
 		uni.navigateTo({
 			url: `/pages/index/deputy_index/locationClockin/locationClockin?lecture_id=${item.lecture_id}&lat=${item.latitude}&lot=${item.longitude}&time=${item.lecture_time}`
 		});
 		console.log('跳转打卡', item)
 	}
-	
+
 	function fetchLecture() {
+		let port = store.getters.port;
 		uni.request({
-			url: `http://127.0.0.1:8080/bookInfo?student_id=${studentId.value}&style=${type.value}`,
+			url: `http://${port}/bookInfo?student_id=${studentId.value}&style=${type.value}`,
 			method: 'GET',
 			success(res) {
 				lectures.value = res.data.lecture.sort((a, b) => b.lecture_id - a.lecture_id);
@@ -203,7 +205,7 @@
 			align-items: center;
 			justify-content: center;
 			background-color: #5f9ea0;
-			color: white; 
+			color: white;
 			font-size: 34rpx;
 			border-top-left-radius: 20rpx;
 			/* 左上圆角 */

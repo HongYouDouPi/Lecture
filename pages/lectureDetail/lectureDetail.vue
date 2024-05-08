@@ -56,9 +56,9 @@
 			</view>
 
 			<!-- 参与名单容器 -->
-			<view v-if="showList" class="LectureParticipant" >
+			<view v-if="showList" class="LectureParticipant">
 				<view v-for="(participant, index) in ParticipationList.value" :key="index" class="Participant">
-					<text>学号：{{ participant.student_id }}</text> 
+					<text>学号：{{ participant.student_id }}</text>
 				</view>
 			</view>
 
@@ -104,7 +104,7 @@
 
 	// 获取 Vuex Store 实例
 	const store = useStore();
-
+	const port = store.getters.port;
 	const lectureInfo = reactive({
 		lecture_name: "宣讲会",
 		lecture_time: "2024/4/10",
@@ -151,7 +151,7 @@
 	function IsBooking() {
 		let studentId = store.getters.studentId; // 获取全局的 studentId
 		uni.request({
-			url: 'http://127.0.0.1:8080/booking/search',
+			url: `http://${port}/booking/search`,
 			method: 'GET',
 			data: {
 				student_id: studentId,
@@ -198,7 +198,7 @@
 			const query = `?student_id=${studentId}&lecture_id=${lectureInfo.lecture_id}`
 			console.log('query', query)
 			uni.request({
-				url: `http://127.0.0.1:8080/booking/add${query}`,
+				url: `http://${port}/booking/add${query}`,
 				method: 'POST',
 				success: (res) => {
 					if (res.statusCode === 200) {
@@ -234,7 +234,7 @@
 			const query = `?student_id=${studentId}&lecture_id=${lectureInfo.lecture_id}`
 			console.log('query', query)
 			uni.request({
-				url: `http://127.0.0.1:8080/booking/del${query}`,
+				url: `http://${port}/booking/del${query}`,
 				method: 'POST',
 				success: (res) => {
 					if (res.statusCode === 200) {
@@ -268,7 +268,7 @@
 		const query = lectureInfo.lecture_id ? `?lecture_id=${lectureInfo.lecture_id}` : '';
 		// 然后再发送请求获取数据
 		uni.request({
-			url: `http://localhost:8080/lecturesInfo${query}`,
+			url: `http://${port}/lecturesInfo${query}`,
 			method: 'GET',
 			// data: {
 			//     lecture_id: lectureId
@@ -306,21 +306,22 @@
 		});
 	}
 
-	function fetchStudentId(){
+	function fetchStudentId() {
 		uni.request({
-			url:`http://localhost:8080/bookInfo/studentId?lecture_id=${lectureInfo.lecture_id}`,
+			url: `http://${port}/bookInfo/studentId?lecture_id=${lectureInfo.lecture_id}`,
 			method: 'GET',
 			success: (res) => {
 				// console.log("获得studentId数据", res.data)
 				ParticipationList.value = res.data
-				console.log('ParticipationList',ParticipationList.value)
-			},fail: (err) => {
+				console.log('ParticipationList', ParticipationList.value)
+			},
+			fail: (err) => {
 				console.error('请求studentId失败', err);
 			}
-			
+
 		})
 	}
-	
+
 	// 页面加载钱
 	onLoad((e) => {
 		// 获取全局的 studentId
@@ -335,8 +336,8 @@
 		LectureInfo();
 		// 判断是否预约
 		IsBooking();
-		
-		
+
+
 	});
 </script>
 
@@ -463,8 +464,9 @@
 				justify-content: center;
 				height: 500rpx;
 				width: 100%;
+
 				// height: 200rpx
-				.Participant{
+				.Participant {
 					display: flex;
 					align-items: center;
 					flex-direction: center;

@@ -5,7 +5,8 @@ const store = createStore({
   state() {
     return {
 		// 全局变量
-	  studentId: ''
+	  studentId: '',
+	  port : '121.37.45.61:45065'
     };
   },
   mutations: {
@@ -19,7 +20,8 @@ const store = createStore({
 	}
   },
   getters: {
-	studentId: state => state.studentId
+	studentId: state => state.studentId,
+	port: state => state.port
   }
 });
 

@@ -99,7 +99,9 @@
 	import {
 		onShow
 	} from "@dcloudio/uni-app";
-
+	import { useStore } from 'vuex';
+	// 获取 Vuex Store 实例
+	const store = useStore();
 	// 讲座信息
 	// 用数组存放中括号表示包含所有数据 大括号表示一个对像
 	const lectures = ref([])
@@ -186,8 +188,9 @@
 	}
 
 	function fetchLecture() {
+		let port = store.getters.port;
 		uni.request({
-			url: 'http://127.0.0.1:8080/lecturesInfo',
+			url: `http://${port}/lecturesInfo`,
 			method: 'GET',
 			success(res) {
 				lectures.value = res.data.result.sort((a, b) => b.lecture_id - a.lecture_id);

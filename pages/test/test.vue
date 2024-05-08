@@ -5,7 +5,7 @@
 	</view>
 	<view class="content">
 		<!-- 显示讲座信息 -->
-		<view class="content_item" v-for="(lecture, index) in lectures" :key="index" >
+		<view class="content_item" v-for="(lecture, index) in lectures" :key="index">
 			<!-- 讲座图片 -->
 			<image :src="lecture.lecture_image_url" mode="aspectFill" class="lecture-image"></image>
 			<text class="lecture-name">{{ lecture.lecture_name }}</text>
@@ -26,11 +26,16 @@
 	import {
 		onLoad
 	} from '@dcloudio/uni-app';
-	
+	import {
+		useStore
+	} from 'vuex';
+	// 获取 Vuex Store 实例
+	const store = useStore();
+	const port = store.getters.port;
 	const studentId = ref('')
 	const lectures = ref([]);
 	const type = ref('');
-	
+
 	// 日期格式化函数
 	const formatDate = (dateString) => {
 		const options = {
@@ -42,11 +47,11 @@
 		};
 		return new Date(dateString).toLocaleDateString('zh-CN', options);
 	};
-	
+
 	// 获取预约的讲座信息
-	function fetchLecture(){
+	function fetchLecture() {
 		uni.request({
-			url: `http://127.0.0.1:8080/bookInfo?student_id=${studentId.value}&style=${type.value}`,
+			url: `http://${port}/bookInfo?student_id=${studentId.value}&style=${type.value}`,
 			method: 'GET',
 			success(res) {
 				lectures.value = res.data;
@@ -56,7 +61,7 @@
 				console.error('Failed to fetch lectures:', err);
 			}
 		});
-		
+
 	}
 	onLoad((e) => {
 		const req = e;

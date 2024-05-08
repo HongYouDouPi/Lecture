@@ -53,7 +53,12 @@
 	import {
 		onLoad
 	} from '@dcloudio/uni-app';
-
+	import {
+		useStore
+	} from 'vuex';
+	// 获取 Vuex Store 实例
+	const store = useStore();
+	const port = store.getters.port;
 	// 使用reactive创建一个响应式对象来存储所有数据
 	const userInfo = reactive({
 		user_name: '',
@@ -110,7 +115,7 @@
 			success: chooseImageRes => {
 				const tempFilePaths = chooseImageRes.tempFilePaths;
 				uni.uploadFile({
-					url: 'http://127.0.0.1:8080/uploadImage', // 上传图片单独端口
+					url: `http://${port}/uploadImage`, // 上传图片单独端口
 					filePath: tempFilePaths[0],
 					name: 'file',
 					success: uploadFileRes => {
@@ -151,7 +156,7 @@
 	function saveInformation() {
 		// 使用userInfo作为请求的数据对象
 		uni.request({
-			url: 'http://127.0.0.1:8080/userEdit',
+			url: `http://${port}/userEdit`,
 			method: 'POST',
 			data: {
 				...userInfo
@@ -192,7 +197,7 @@
 		// 先加载用户信息
 		const query = userInfo.student_id ? `?student_id=${userInfo.student_id}` : '';
 		uni.request({
-			url: `http://127.0.0.1:8080/userInfo${query}`,
+			url: `http://${port}/userInfo${query}`,
 			method: 'GET',
 			success(res) {
 				Object.assign(userInfo, res.data);
@@ -277,7 +282,7 @@
 			display: flex;
 			align-items: center;
 			margin: 30rpx 0rpx;
-			
+
 			text {
 				margin-right: 10rpx;
 			}

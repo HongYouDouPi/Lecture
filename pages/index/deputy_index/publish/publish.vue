@@ -63,7 +63,7 @@
 	import {
 		useStore
 	} from 'vuex';
-
+	const port = store.getters.port;
 	// 获取 Vuex Store 实例
 	const store = useStore();
 	// 获取全局的 studentId
@@ -105,7 +105,7 @@
 			success: chooseImageRes => {
 				const tempFilePaths = chooseImageRes.tempFilePaths;
 				uni.uploadFile({
-					url: 'http://127.0.0.1:8080/uploadImage', // 上传图片单独端口
+					url: `http://${port}/uploadImage`, // 上传图片单独端口
 					filePath: tempFilePaths[0],
 					name: 'file',
 					success: uploadFileRes => {
@@ -169,7 +169,7 @@
 		try {
 			const response = await uni.request({
 				//后端接口
-				url: 'http://127.0.0.1:8080/lecturesInfoSend',
+				url: `http://${port}/lecturesInfoSend`,
 				method: 'POST',
 				data: data
 			});
